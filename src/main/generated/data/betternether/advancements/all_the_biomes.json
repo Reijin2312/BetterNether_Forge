@@ -372,70 +372,70 @@
   },
   "requirements": [
     [
-      "betternether:magma_land"
-    ],
-    [
-      "betternether:bone_reef"
-    ],
-    [
-      "betternether:nether_mushroom_forest"
-    ],
-    [
-      "betternether:crimson_pinewood"
-    ],
-    [
-      "betternether:crimson_glowing_woods"
-    ],
-    [
-      "betternether:soul_plain"
-    ],
-    [
-      "betternether:nether_swampland_terraces"
-    ],
-    [
-      "betternether:flooded_deltas"
-    ],
-    [
-      "betternether:sulfuric_bone_reef"
-    ],
-    [
-      "betternether:nether_swampland"
-    ],
-    [
-      "betternether:upside_down_forest_cleared"
-    ],
-    [
-      "betternether:old_warped_woods"
+      "betternether:wart_forest_edge"
     ],
     [
       "betternether:wart_forest"
     ],
     [
-      "betternether:old_swampland"
+      "betternether:sulfuric_bone_reef"
     ],
     [
       "betternether:nether_grasslands"
     ],
     [
-      "betternether:wart_forest_edge"
+      "betternether:old_warped_woods"
     ],
     [
-      "betternether:nether_jungle"
+      "betternether:nether_mushroom_forest_edge"
     ],
     [
-      "betternether:upside_down_forest"
+      "betternether:magma_land"
     ],
     [
       "betternether:old_fungiwoods"
     ],
     [
-      "betternether:gravel_desert"
+      "betternether:crimson_glowing_woods"
+    ],
+    [
+      "betternether:bone_reef"
+    ],
+    [
+      "betternether:upside_down_forest"
+    ],
+    [
+      "betternether:nether_swampland_terraces"
+    ],
+    [
+      "betternether:old_swampland"
+    ],
+    [
+      "betternether:crimson_pinewood"
+    ],
+    [
+      "betternether:upside_down_forest_cleared"
     ],
     [
       "betternether:poor_nether_grasslands"
     ],
     [
-      "betternether:nether_mushroom_forest_edge"
+      "betternether:flooded_deltas"
+    ],
+    [
+      "betternether:soul_plain"
+    ],
+    [
+      "betternether:gravel_desert"
+    ],
+    [
+      "betternether:nether_swampland"
+    ],
+    [
+      "betternether:nether_mushroom_forest"
+    ],
+    [
+      "betternether:nether_jungle"
     ]
   ],
   "rewards": {

@@ -19,9 +19,9 @@
         "items": [
           {
             "items": [
+              "minecraft:crimson_hyphae",
               "minecraft:crimson_planks",
-              "minecraft:crimson_stem",
-              "minecraft:crimson_hyphae"
+              "minecraft:crimson_stem"
             ]
           }
         ]
@@ -46,8 +46,8 @@
         "items": [
           {
             "items": [
-              "betternether:nether_mushroom_planks",
-              "betternether:nether_mushroom_stem"
+              "betternether:nether_mushroom_stem",
+              "betternether:nether_mushroom_planks"
             ]
           }
         ]
@@ -85,8 +85,8 @@
         "items": [
           {
             "items": [
-              "betternether:rubeus_planks",
-              "minecraft:air"
+              "minecraft:air",
+              "betternether:rubeus_planks"
             ]
           }
         ]
@@ -111,9 +111,9 @@
         "items": [
           {
             "items": [
-              "minecraft:warped_stem",
               "minecraft:warped_hyphae",
-              "minecraft:warped_planks"
+              "minecraft:warped_planks",
+              "minecraft:warped_stem"
             ]
           }
         ]
@@ -138,8 +138,8 @@
         "items": [
           {
             "items": [
-              "betternether:willow_planks",
-              "minecraft:air"
+              "minecraft:air",
+              "betternether:willow_planks"
             ]
           }
         ]
