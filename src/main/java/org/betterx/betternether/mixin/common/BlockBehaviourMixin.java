@@ -4,6 +4,7 @@ import org.betterx.betternether.enchantments.RubyFire;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,18 +22,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class BlockBehaviourMixin {
 
 
-    @Inject(method = "dropResources(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)V", at = @At("HEAD"), cancellable = true)
-    private static void bn_getDrops(
-            BlockState brokenBlock,
+    @Inject(method = "playerDestroy", at = @At("HEAD"), cancellable = true)
+    private void bn_playerDestroy(
             Level level,
+            Player player,
             BlockPos blockPos,
+            BlockState brokenBlock,
             BlockEntity blockEntity,
-            Entity breakingEntity,
             ItemStack breakingItem,
             CallbackInfo ci
     ) {
-        if ((level instanceof ServerLevel server) && (breakingEntity instanceof Player player)) {
+        if (level instanceof ServerLevel server) {
             if (RubyFire.getDrops(brokenBlock, server, blockPos, player, breakingItem)) {
+                player.awardStat(Stats.BLOCK_MINED.get(brokenBlock.getBlock()));
+                player.causeFoodExhaustion(0.005f);
                 ci.cancel();
             }
         }

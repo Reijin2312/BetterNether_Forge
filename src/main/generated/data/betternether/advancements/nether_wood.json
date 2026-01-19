@@ -46,8 +46,8 @@
         "items": [
           {
             "items": [
-              "betternether:nether_mushroom_planks",
-              "betternether:nether_mushroom_stem"
+              "betternether:nether_mushroom_stem",
+              "betternether:nether_mushroom_planks"
             ]
           }
         ]

@@ -25,6 +25,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -119,6 +120,9 @@ public class RubyFire extends Enchantment {
 
     private static final Map<Item, BlastingRecipe> FIRE_CONVERSIONS = new HashMap<>();
     public static final ThreadLocal<List<ItemStack>> convertedDrops = ThreadLocal.withInitial(ArrayList::new);
+    private static final boolean LOG_RUBY_FIRE = Boolean.parseBoolean(
+            System.getProperty("betternether.rubyfire.log", "true")
+    );
 
     public static boolean getDrops(
             BlockState brokenBlock,
@@ -129,12 +133,25 @@ public class RubyFire extends Enchantment {
     ) {
         final int fireLevel = EnchantmentHelper.getItemEnchantmentLevel(NetherEnchantments.RUBY_FIRE, breakingItem);
         if (fireLevel > 0) {
+            log(
+                    "RubyFire: start block={} tool={} fireLevel={}",
+                    brokenBlock.getBlock(),
+                    breakingItem.getItem(),
+                    fireLevel
+            );
+            int silkLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, breakingItem);
+            if (silkLevel > 0) {
+                log("RubyFire: silk_touch={} -> skip", silkLevel);
+                return false;
+            }
             if (FIRE_CONVERSIONS.isEmpty()) buildConversionTable(level);
+            log("RubyFire: conversion table size={}", FIRE_CONVERSIONS.size());
 
             boolean didConvert = false;
             int xpDrop = 0;
             try {
                 final List<ItemStack> drops = Block.getDrops(brokenBlock, level, blockPos, null, player, breakingItem);
+                log("RubyFire: drops={}", drops);
                 convertedDrops.get().clear();
 
                 for (ItemStack stack : drops) {
@@ -142,6 +159,11 @@ public class RubyFire extends Enchantment {
                     if (result != null) {
                         didConvert = true;
                         final ItemStack resultStack = result.getResultItem(level.registryAccess());
+                        log(
+                                "RubyFire: convert {} -> {}",
+                                stack.getItem(),
+                                resultStack.getItem()
+                        );
                         xpDrop += result.getExperience();
                         convertedDrops.get()
                                       .add(new ItemStack(
@@ -157,6 +179,7 @@ public class RubyFire extends Enchantment {
             }
 
             if (didConvert) {
+                log("RubyFire: convertedDrops={} xpDrop={}", convertedDrops.get(), xpDrop);
                 if (xpDrop > 0) {
                     popExperience(level, blockPos, xpDrop);
                 }
@@ -165,6 +188,7 @@ public class RubyFire extends Enchantment {
                 convertedDrops.get().clear();
                 return true;
             }
+            log("RubyFire: no conversion matched");
             convertedDrops.get().clear();
         }
 
@@ -178,9 +202,10 @@ public class RubyFire extends Enchantment {
     }
 
     private static void buildConversionTable(ServerLevel level) {
-        final List<BlastingRecipe> recipes = level.getRecipeManager()
-                                                  .getAllRecipesFor(RecipeType.BLASTING);
-        for (BlastingRecipe r : recipes) {
+        final List<BlastingRecipe> blastingRecipes = level.getRecipeManager()
+                                                          .getAllRecipesFor(RecipeType.BLASTING);
+        log("RubyFire: blasting recipes={}", blastingRecipes.size());
+        for (BlastingRecipe r : blastingRecipes) {
             for (Ingredient ingredient : r.getIngredients()) {
                 for (ItemStack stack : ingredient.getItems()) {
                     if (stack.getItem() instanceof BlockItem blitem) {
@@ -191,6 +216,13 @@ public class RubyFire extends Enchantment {
                     FIRE_CONVERSIONS.put(stack.getItem(), r);
                 }
             }
+        }
+        log("RubyFire: conversion table built size={}", FIRE_CONVERSIONS.size());
+    }
+
+    private static void log(String message, Object... params) {
+        if (LOG_RUBY_FIRE) {
+            BetterNether.LOGGER.info(message, params);
         }
     }
 }
