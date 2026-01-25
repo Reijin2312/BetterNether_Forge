@@ -1,19 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_nether_reed_stem": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "betternether:nether_reed_stem"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_sculk_catalyst": {
+    "has_block.minecraft.sculk_catalyst": {
       "conditions": {
         "items": [
           {
@@ -34,8 +22,7 @@
   },
   "requirements": [
     [
-      "has_nether_reed_stem",
-      "has_sculk_catalyst",
+      "has_block.minecraft.sculk_catalyst",
       "has_the_recipe"
     ]
   ],

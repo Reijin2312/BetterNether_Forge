@@ -1,19 +1,15 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "equipment",
-  "group": "flaming_ruby_chestplate",
-  "key": {
-    "#": {
-      "item": "minecraft:sculk_catalyst"
-    }
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:sculk_catalyst"
   },
-  "pattern": [
-    "# #",
-    "###",
-    "###"
-  ],
+  "base": {
+    "item": "betternether:nether_ruby_chestplate"
+  },
   "result": {
     "item": "betternether:flaming_ruby_chestplate"
   },
-  "show_notification": true
+  "template": {
+    "item": "betternether:flaming_ruby_upgrade_smithing_template"
+  }
 }

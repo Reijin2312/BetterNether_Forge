@@ -122,6 +122,15 @@ public enum BNToolMaterial implements Tier, SmithingSet {
 
     @Override
     public SmithingTemplateItem getSmithingTemplateItem() {
-        return this.smithingTemplateItem;
+        if (this.smithingTemplateItem != null) {
+            return this.smithingTemplateItem;
+        }
+        if (this == CINCINNASITE_DIAMOND) {
+            return NetherTemplates.CINCINNASITE_DIAMOND_TEMPLATE;
+        }
+        if (this == FLAMING_RUBY) {
+            return NetherTemplates.FLAMING_RUBY_TEMPLATE;
+        }
+        return null;
     }
 }

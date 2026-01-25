@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sculk_catalyst": {
+    "has_block.minecraft.sculk_catalyst": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_sculk_catalyst",
+      "has_block.minecraft.sculk_catalyst",
       "has_the_recipe"
     ]
   ],

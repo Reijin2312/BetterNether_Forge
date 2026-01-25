@@ -1,24 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_diamond": {
+    "has_item.minecraft.diamond": {
       "conditions": {
         "items": [
           {
             "items": [
               "minecraft:diamond"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_nether_reed_stem": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "betternether:nether_reed_stem"
             ]
           }
         ]
@@ -34,8 +22,7 @@
   },
   "requirements": [
     [
-      "has_nether_reed_stem",
-      "has_diamond",
+      "has_item.minecraft.diamond",
       "has_the_recipe"
     ]
   ],

@@ -157,6 +157,12 @@ public enum BNArmorMaterial implements ArmorMaterial, SmithingSet {
 
     @Override
     public SmithingTemplateItem getSmithingTemplateItem() {
-        return smithingTemplateItem;
+        if (smithingTemplateItem != null) {
+            return smithingTemplateItem;
+        }
+        if (this == FLAMING_RUBY) {
+            return NetherTemplates.FLAMING_RUBY_TEMPLATE;
+        }
+        return null;
     }
 }

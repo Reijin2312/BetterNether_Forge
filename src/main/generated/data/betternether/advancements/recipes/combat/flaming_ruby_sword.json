@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sculk_catalyst": {
+    "has_block.minecraft.sculk_catalyst": {
       "conditions": {
         "items": [
           {
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "betternether:flaming_ruby_leggings"
+        "recipe": "betternether:flaming_ruby_sword"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_sculk_catalyst",
+      "has_block.minecraft.sculk_catalyst",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "betternether:flaming_ruby_leggings"
+      "betternether:flaming_ruby_sword"
     ]
   },
   "sends_telemetry_event": false
