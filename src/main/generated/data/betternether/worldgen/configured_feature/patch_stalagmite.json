@@ -23,6 +23,8 @@
             "state": {
               "Name": "betternether:netherrack_stalactite",
               "Properties": {
+                "lava_falling": "false",
+                "lava_level": "0",
                 "size": "0"
               }
             }

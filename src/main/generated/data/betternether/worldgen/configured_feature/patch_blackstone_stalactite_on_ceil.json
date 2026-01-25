@@ -9,10 +9,7 @@
             "to_place": {
               "type": "minecraft:simple_state_provider",
               "state": {
-                "Name": "minecraft:black_glazed_terracotta",
-                "Properties": {
-                  "facing": "north"
-                }
+                "Name": "minecraft:smooth_basalt"
               }
             }
           }
@@ -162,6 +159,8 @@
                     "state": {
                       "Name": "betternether:blackstone_stalactite",
                       "Properties": {
+                        "lava_falling": "false",
+                        "lava_level": "0",
                         "size": "0"
                       }
                     }
@@ -180,7 +179,7 @@
                   "predicate": {
                     "type": "minecraft:matching_blocks",
                     "blocks": [
-                      "minecraft:black_glazed_terracotta",
+                      "minecraft:smooth_basalt",
                       "minecraft:basalt"
                     ]
                   }

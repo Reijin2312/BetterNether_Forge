@@ -54,7 +54,7 @@ public class NetherObjects {
             .build();
 
     public static final BCLFeature<SimpleBlockFeature, SimpleBlockConfiguration> PATCH_TERRACOTTA_CLUMP = BCLFeatureBuilder
-            .start(BN.id("temp_terracotta_clump"), Blocks.BLACK_GLAZED_TERRACOTTA)
+            .start(BN.id("temp_terracotta_clump"), Blocks.SMOOTH_BASALT)
             .inlinePlace()
             .extendXYZ(3, 3)
             .is(BlockPredicate.matchesBlocks(Blocks.BASALT))
@@ -99,7 +99,7 @@ public class NetherObjects {
             .blockState(NetherBlocks.BLACKSTONE_STALACTITE)
             .maxHeight(BiasedToBottomInt.of(3, 9))
             .inlinePlace()
-            .isOn(BlockPredicate.matchesBlocks(Blocks.BLACK_GLAZED_TERRACOTTA, Blocks.BASALT))
+            .isOn(BlockPredicate.matchesBlocks(Blocks.SMOOTH_BASALT, Blocks.BASALT))
             .inRandomPatch(BN.id("patch_blackstone_stalactite"))
             .inlinePlace()
             .build();
@@ -110,7 +110,7 @@ public class NetherObjects {
             .blockState(NetherBlocks.BLACKSTONE_STALACTITE)
             .maxHeight(BiasedToBottomInt.of(3, 8))
             .inlinePlace()
-            .isOn(BlockPredicate.matchesBlocks(Blocks.BLACK_GLAZED_TERRACOTTA, Blocks.BASALT))
+            .isOn(BlockPredicate.matchesBlocks(Blocks.SMOOTH_BASALT, Blocks.BASALT))
             .inRandomPatch(BN.id("patch_blackstone_stalagmite"))
             .inlinePlace()
             .build();

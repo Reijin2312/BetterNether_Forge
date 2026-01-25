@@ -2,6 +2,7 @@ package org.betterx.betternether;
 
 import org.betterx.bclib.BCLib;
 import org.betterx.bclib.api.v2.dataexchange.DataExchangeAPI;
+import org.betterx.bclib.registry.RegistryBootstrap;
 import org.betterx.betternether.advancements.BNCriterion;
 import org.betterx.betternether.commands.CommandRegistry;
 import org.betterx.betternether.config.Config;
@@ -37,6 +38,7 @@ public class BetterNether {
 
     public BetterNether() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+        // Avoid eager block/item class loading here; it can trip registry freeze in datagen.
         modBus.addListener(EventPriority.HIGHEST, this::ensureStructuresLoaded);
         modBus.addListener(NetherEntities::onRegister);
         modBus.addListener(NetherParticles::onRegister);
@@ -46,6 +48,7 @@ public class BetterNether {
         modBus.addListener(NetherTemplates::register);
         modBus.addListener(EventPriority.HIGHEST, this::ensureBlocksLoaded);
         modBus.addListener(EventPriority.HIGHEST, this::ensureItemsLoaded);
+        modBus.addListener(EventPriority.LOWEST, RegistryBootstrap::register);
         modBus.addListener(this::onCommonSetup);
     }
 
@@ -92,6 +95,9 @@ public class BetterNether {
         } catch (ClassNotFoundException ignored) {
         }
         NetherTags.register();
+        // Ensure features/structure types are queued before BCLib's registry events fire.
+        NetherStructures.ensureStaticLoad();
+        NetherFeatures.register();
     }
 
     private void ensureStructuresLoaded(RegisterEvent event) {

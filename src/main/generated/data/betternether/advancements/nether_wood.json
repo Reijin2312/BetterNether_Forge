@@ -6,8 +6,8 @@
         "items": [
           {
             "items": [
-              "betternether:anchor_tree_planks",
-              "minecraft:air"
+              "minecraft:air",
+              "betternether:anchor_tree_planks"
             ]
           }
         ]
@@ -20,8 +20,8 @@
           {
             "items": [
               "minecraft:crimson_planks",
-              "minecraft:crimson_stem",
-              "minecraft:crimson_hyphae"
+              "minecraft:crimson_hyphae",
+              "minecraft:crimson_stem"
             ]
           }
         ]
@@ -33,8 +33,8 @@
         "items": [
           {
             "items": [
-              "betternether:mushroom_fir_planks",
-              "minecraft:air"
+              "minecraft:air",
+              "betternether:mushroom_fir_planks"
             ]
           }
         ]
@@ -46,8 +46,8 @@
         "items": [
           {
             "items": [
-              "betternether:nether_mushroom_planks",
-              "betternether:nether_mushroom_stem"
+              "betternether:nether_mushroom_stem",
+              "betternether:nether_mushroom_planks"
             ]
           }
         ]
@@ -59,8 +59,8 @@
         "items": [
           {
             "items": [
-              "betternether:nether_reed_stem",
-              "betternether:nether_reed_planks"
+              "betternether:nether_reed_planks",
+              "betternether:nether_reed_stem"
             ]
           }
         ]
@@ -98,8 +98,8 @@
         "items": [
           {
             "items": [
-              "betternether:stalagnate_planks",
-              "minecraft:air"
+              "minecraft:air",
+              "betternether:stalagnate_planks"
             ]
           }
         ]
@@ -111,9 +111,9 @@
         "items": [
           {
             "items": [
-              "minecraft:warped_stem",
+              "minecraft:warped_planks",
               "minecraft:warped_hyphae",
-              "minecraft:warped_planks"
+              "minecraft:warped_stem"
             ]
           }
         ]
@@ -125,8 +125,8 @@
         "items": [
           {
             "items": [
-              "betternether:wart_planks",
-              "minecraft:air"
+              "minecraft:air",
+              "betternether:wart_planks"
             ]
           }
         ]

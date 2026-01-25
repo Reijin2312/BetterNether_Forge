@@ -6,11 +6,11 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class BrewingRegistry {
-    private static final List<BrewingRecipe> RECIPES = new ArrayList<BrewingRecipe>();
+    private static final List<BrewingRecipe> RECIPES = new CopyOnWriteArrayList<BrewingRecipe>();
 
     public static void register() {
         register(
