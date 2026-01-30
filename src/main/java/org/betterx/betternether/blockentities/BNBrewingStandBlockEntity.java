@@ -34,6 +34,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 public class BNBrewingStandBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
+    private static final int BREW_TIME_TICKS = 400;
+    private static final int BREW_TIME_STEP = 2;
     private static final int[] TOP_SLOTS = new int[]{3};
     private static final int[] BOTTOM_SLOTS = new int[]{0, 1, 2, 3};
     private static final int[] SIDE_SLOTS = new int[]{0, 1, 2, 4};
@@ -112,7 +114,7 @@ public class BNBrewingStandBlockEntity extends BaseContainerBlockEntity implemen
         boolean bl2 = blockEntity.brewTime > 0;
         ItemStack itemStack2 = blockEntity.inventory.get(3);
         if (bl2) {
-            --blockEntity.brewTime;
+            blockEntity.brewTime = Math.max(0, blockEntity.brewTime - BREW_TIME_STEP);
             boolean bl3 = blockEntity.brewTime == 0;
             if (bl3 && bl) {
                 blockEntity.craft();
@@ -126,7 +128,7 @@ public class BNBrewingStandBlockEntity extends BaseContainerBlockEntity implemen
             }
         } else if (bl && blockEntity.fuel > 0) {
             --blockEntity.fuel;
-            blockEntity.brewTime = 400;
+            blockEntity.brewTime = BREW_TIME_TICKS;
             blockEntity.itemBrewing = itemStack2.getItem();
             setChanged(world, pos, state);
         }
