@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "betternether:spruce_bar_stool"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "betternether:blocks/spruce_bar_stool"
+}

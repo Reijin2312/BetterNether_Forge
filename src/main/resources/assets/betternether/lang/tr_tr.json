@@ -691,6 +691,10 @@
 	"advancements.betternether.cincinnasite_diamond_tools.title": "Bling!",
 	"advancements.betternether.cincinnasite_diamond_tools.description": "Tüm Sinsinit Eşyalarını Elmas İle Kapla",
 	"advancements.betternether.cincinnasite_forge.title": "Bağışlanmış",
-	"advancements.betternether.cincinnasite_forge.description": "Bir Şeyleri Eritmek İçin Ocak Kullan"
-  }
+	"advancements.betternether.cincinnasite_forge.description": "Bir Şeyleri Eritmek İçin Ocak Kullan",
+  "item.betternether.bowl_upgrade_smithing_template": "Netherite Fire Bowl Upgrade Smithing Template",
+  "item.betternether.cincinnasite_diamond_upgrade_smithing_template": "Diamond Cincinnasite Upgrade Smithing Template",
+  "item.betternether.cincinnasite_upgrade_smithing_template": "Cincinnasite Upgrade Smithing Template",
+  "item.betternether.flaming_ruby_upgrade_smithing_template": "Fireruby Upgrade Smithing Template"
+}
   

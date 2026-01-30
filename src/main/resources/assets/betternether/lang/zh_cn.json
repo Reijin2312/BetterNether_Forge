@@ -755,5 +755,9 @@
   "block.betternether.stripped_wood_mushroom_fir": "去皮菇下界冷杉木",
   "itemGroup.betternether.nether_blocks": "更好的下界方块",
   "itemGroup.betternether.nether_items": "更好的下界物品",
-  "advancements.betternether.root.decription": "探索更好的下界"
+  "advancements.betternether.root.decription": "探索更好的下界",
+  "item.betternether.bowl_upgrade_smithing_template": "Netherite Fire Bowl Upgrade Smithing Template",
+  "item.betternether.cincinnasite_diamond_upgrade_smithing_template": "Diamond Cincinnasite Upgrade Smithing Template",
+  "item.betternether.cincinnasite_upgrade_smithing_template": "Cincinnasite Upgrade Smithing Template",
+  "item.betternether.flaming_ruby_upgrade_smithing_template": "Fireruby Upgrade Smithing Template"
 }

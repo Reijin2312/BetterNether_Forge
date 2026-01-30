@@ -7,11 +7,13 @@ import net.minecraft.world.item.crafting.RecipeManager;
 
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
+import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 
+@EmiEntrypoint
 public class EMIPlugin implements EmiPlugin {
     public static final EmiIngredient BLACKSTONE_FURNACE_WORKSTATION = EmiStack.of(NetherBlocks.BLACKSTONE_FURNACE);
     public static final EmiIngredient NETHERRACK_FURNACE_WORKSTATION = EmiStack.of(NetherBlocks.NETHERRACK_FURNACE);

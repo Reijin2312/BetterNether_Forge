@@ -614,5 +614,9 @@
   "advancements.betternether.ruby_gear.description": "燃えるような赤いルビーの防具で身を包む",
   "advancements.betternether.ruby_tools.title": "レッドネザー",
   "advancements.betternether.ruby_tools.description": "ネザールビーのツールを入手する",
-  "block.betternether.stripped_wood_mushroom_fir": "樹皮を剝いだモミキノコの木"
+  "block.betternether.stripped_wood_mushroom_fir": "樹皮を剝いだモミキノコの木",
+  "item.betternether.bowl_upgrade_smithing_template": "Netherite Fire Bowl Upgrade Smithing Template",
+  "item.betternether.cincinnasite_diamond_upgrade_smithing_template": "Diamond Cincinnasite Upgrade Smithing Template",
+  "item.betternether.cincinnasite_upgrade_smithing_template": "Cincinnasite Upgrade Smithing Template",
+  "item.betternether.flaming_ruby_upgrade_smithing_template": "Fireruby Upgrade Smithing Template"
 }

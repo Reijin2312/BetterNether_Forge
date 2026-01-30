@@ -271,5 +271,9 @@
   "block.betternether.wart_stripped_log": "Ociosany brodawczanowy pień",
   "block.betternether.stalagnate_stripped_bark": "Okorowane stalagnatowcowe drewno",
   "block.betternether.willow_stripped_bark": "Okorowane wierzbowe drewno",
-  "block.betternether.wart_stripped_bark": "Ociosane brodawczane drewno"
+  "block.betternether.wart_stripped_bark": "Ociosane brodawczane drewno",
+  "item.betternether.bowl_upgrade_smithing_template": "Netherite Fire Bowl Upgrade Smithing Template",
+  "item.betternether.cincinnasite_diamond_upgrade_smithing_template": "Diamond Cincinnasite Upgrade Smithing Template",
+  "item.betternether.cincinnasite_upgrade_smithing_template": "Cincinnasite Upgrade Smithing Template",
+  "item.betternether.flaming_ruby_upgrade_smithing_template": "Fireruby Upgrade Smithing Template"
 }

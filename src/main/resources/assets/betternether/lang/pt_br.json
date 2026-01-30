@@ -604,5 +604,9 @@
   "block.betternether.stripped_bark_anchor_tree": "Madeira de Árvore Âncora Descascada",
   "block.betternether.stripped_log_anchor_tree": "Tronco de Árvore Âncora Descascado",
   "block.betternether.stripped_bark_nether_sakura": "Madeira de Sakura do Nether Descascada",
-  "block.betternether.stripped_log_nether_sakura": "Tronco de Sakura do Nether Descascado"
+  "block.betternether.stripped_log_nether_sakura": "Tronco de Sakura do Nether Descascado",
+  "item.betternether.bowl_upgrade_smithing_template": "Netherite Fire Bowl Upgrade Smithing Template",
+  "item.betternether.cincinnasite_diamond_upgrade_smithing_template": "Diamond Cincinnasite Upgrade Smithing Template",
+  "item.betternether.cincinnasite_upgrade_smithing_template": "Cincinnasite Upgrade Smithing Template",
+  "item.betternether.flaming_ruby_upgrade_smithing_template": "Fireruby Upgrade Smithing Template"
 }

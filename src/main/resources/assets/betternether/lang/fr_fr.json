@@ -584,5 +584,9 @@
   "block.betternether.neon_equisetum": "Neon Equisetum",
   "block.betternether.hook_mushroom": "Hook Mushroom",
   "item.betternether.hook_mushroom_cooked": "Cooked Hook Mushroom",
-  "block.betternether.stripped_wood_mushroom_fir": "Stripped Mushroom Fir Wood"
+  "block.betternether.stripped_wood_mushroom_fir": "Stripped Mushroom Fir Wood",
+  "item.betternether.bowl_upgrade_smithing_template": "Netherite Fire Bowl Upgrade Smithing Template",
+  "item.betternether.cincinnasite_diamond_upgrade_smithing_template": "Diamond Cincinnasite Upgrade Smithing Template",
+  "item.betternether.cincinnasite_upgrade_smithing_template": "Cincinnasite Upgrade Smithing Template",
+  "item.betternether.flaming_ruby_upgrade_smithing_template": "Fireruby Upgrade Smithing Template"
 }

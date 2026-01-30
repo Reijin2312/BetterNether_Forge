@@ -619,5 +619,9 @@
   "advancements.betternether.city.title": "영광스러운 과거",
   "advancements.betternether.city.description": "버려진 네더 도시 찾기",
   "biome.betternether.upside_down_forest_cleared": "죽은 역림",
-  "block.betternether.stripped_wood_mushroom_fir": "껍질 벗긴 버섯 전나무"
+  "block.betternether.stripped_wood_mushroom_fir": "껍질 벗긴 버섯 전나무",
+  "item.betternether.bowl_upgrade_smithing_template": "Netherite Fire Bowl Upgrade Smithing Template",
+  "item.betternether.cincinnasite_diamond_upgrade_smithing_template": "Diamond Cincinnasite Upgrade Smithing Template",
+  "item.betternether.cincinnasite_upgrade_smithing_template": "Cincinnasite Upgrade Smithing Template",
+  "item.betternether.flaming_ruby_upgrade_smithing_template": "Fireruby Upgrade Smithing Template"
 }

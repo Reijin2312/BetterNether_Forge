@@ -9,5 +9,9 @@
 	"block.betternether.quartz_glass_pane_gray": "Grey Quartz Pane",
 	"block.betternether.quartz_glass_pane_light_gray": "Light Grey Quartz Pane",
 	"block.betternether.quartz_glass_framed_pane_gray": "Grey Framed Quartz Pane",
-	"block.betternether.quartz_glass_framed_pane_light_gray": "Light Grey Framed Quartz Pane"
+	"block.betternether.quartz_glass_framed_pane_light_gray": "Light Grey Framed Quartz Pane",
+	"item.betternether.bowl_upgrade_smithing_template": "Netherite Fire Bowl Upgrade Smithing Template",
+	"item.betternether.cincinnasite_diamond_upgrade_smithing_template": "Diamond Cincinnasite Upgrade Smithing Template",
+	"item.betternether.cincinnasite_upgrade_smithing_template": "Cincinnasite Upgrade Smithing Template",
+	"item.betternether.flaming_ruby_upgrade_smithing_template": "Fireruby Upgrade Smithing Template"
 }
