@@ -64,12 +64,11 @@ public class AnchorTreeRootFeature extends ContextFeature<NoneFeatureConfigurati
             //if (!blockBox.contains(bpos)) continue;
             if (bpos.getY() < minBuildHeight || bpos.getY() > MAX_HEIGHT - 2) continue;
             if (!BlocksHelper.isNetherGround(state = world.getBlockState(bpos)) && !canReplace(state)) continue;
-            boolean blockUp;
-            boolean blockDown = true;
-            if ((blockUp = context.BLOCKS.contains(bpos.above())) && (blockDown = context.BLOCKS.contains(bpos.below())))
-                BlocksHelper.setWithoutUpdate(world, bpos, NetherBlocks.MAT_ANCHOR_TREE.getLog().defaultBlockState());
-            else
-                BlocksHelper.setWithoutUpdate(world, bpos, NetherBlocks.MAT_ANCHOR_TREE.getBark().defaultBlockState());
+
+            boolean blockUp = context.BLOCKS.contains(bpos.above());
+            boolean blockDown = context.BLOCKS.contains(bpos.below());
+
+            BlocksHelper.setWithoutUpdate(world, bpos, NetherBlocks.MAT_ANCHOR_TREE.getBark().defaultBlockState());
 
             if (!blockUp && world.getBlockState(bpos.above()).canBeReplaced()) {
                 BlocksHelper.setWithoutUpdate(world, bpos.above(), NetherBlocks.MOSS_COVER.defaultBlockState());

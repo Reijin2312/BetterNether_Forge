@@ -75,7 +75,7 @@ public class NetherSakuraFeature extends ContextFeature<NoneFeatureConfiguration
                                 BlocksHelper.setWithUpdate(
                                         world,
                                         context.POS,
-                                        NetherBlocks.MAT_NETHER_SAKURA.getLog().defaultBlockState()
+                                        NetherBlocks.MAT_NETHER_SAKURA.getBark().defaultBlockState()
                                 );
                                 updateSDFFrom(context.POS, context);
                             }

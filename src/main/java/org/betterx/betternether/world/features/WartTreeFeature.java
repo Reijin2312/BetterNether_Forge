@@ -175,7 +175,9 @@ public class WartTreeFeature extends NonOverlappingFeature<NaturalTreeConfigurat
     }
 
     private boolean isWart(BlockState state) {
-        return state == WART_BLOCK || state.getBlock() == NetherBlocks.MAT_WART.getLog();
+        return state == WART_BLOCK
+                || state.getBlock() == NetherBlocks.MAT_WART.getLog()
+                || state.getBlock() == NetherBlocks.MAT_WART.getBark();
     }
 
     @Override

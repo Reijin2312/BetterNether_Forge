@@ -31,7 +31,8 @@ public class RubeusTreeFeature extends NonOverlappingFeature<NaturalTreeConfigur
 
     @Override
     protected boolean isStructure(BlockState state) {
-        return state.getBlock() == NetherBlocks.MAT_RUBEUS.getLog();
+        return state.getBlock() == NetherBlocks.MAT_RUBEUS.getBark()
+                || state.getBlock() == NetherBlocks.MAT_RUBEUS.getLog();
     }
 
     @Override
@@ -205,7 +206,7 @@ public class RubeusTreeFeature extends NonOverlappingFeature<NaturalTreeConfigur
 
         for (BlockPos bpos : context.POINTS) {
             if (context.POINTS.contains(bpos.above()) && context.POINTS.contains(bpos.below())) {
-                state = NetherBlocks.MAT_RUBEUS.getLog().defaultBlockState();
+                state = NetherBlocks.MAT_RUBEUS.getBark().defaultBlockState();
                 if (context.MIDDLE.contains(bpos))
                     setCondition(
                             world,

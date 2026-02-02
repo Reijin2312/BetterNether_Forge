@@ -158,11 +158,10 @@ public class AnchorTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
             if (!blockBox.isInside(bpos)) continue;
             if (!BlocksHelper.isNetherGround(state = level.getBlockState(bpos)) && !state.canBeReplaced())
                 continue;
-            boolean blockUp = true;
-            if ((blockUp = context.BLOCKS.contains(bpos.above())) && context.BLOCKS.contains(bpos.below()))
-                BlocksHelper.setWithoutUpdate(level, bpos, NetherBlocks.MAT_ANCHOR_TREE.getLog().defaultBlockState());
-            else
-                BlocksHelper.setWithoutUpdate(level, bpos, NetherBlocks.MAT_ANCHOR_TREE.getBark().defaultBlockState());
+
+            boolean blockUp = context.BLOCKS.contains(bpos.above());
+
+            BlocksHelper.setWithoutUpdate(level, bpos, NetherBlocks.MAT_ANCHOR_TREE.getBark().defaultBlockState());
 
             if (bpos.getY() > HEIGHT_45 && bpos.getY() < HEIGHT_90 && (bpos.getY() & 3) == offset && NOISE.eval(
                     bpos.getX() * 0.1,
