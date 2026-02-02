@@ -1,1 +1,1 @@
-﻿{"textures":{"end":"betternether:block/rubeus_planks","side":"betternether:block/rubeus_planks"},"parent":"minecraft:block/cube_column"}
+﻿{"textures":{"all":"betternether:block/striped_rubeus_log_side"},"parent":"block/cube_all"}
