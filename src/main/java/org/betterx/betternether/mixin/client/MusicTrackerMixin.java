@@ -1,13 +1,12 @@
 package org.betterx.betternether.mixin.client;
 
+import net.minecraft.sounds.Music;
+import net.minecraft.world.level.Level;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.sounds.AbstractSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.MusicManager;
-import net.minecraft.sounds.Music;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.Level;
+import net.minecraft.util.Mth;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,85 +17,83 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MusicManager.class)
-public abstract class MusicTrackerMixin {
-    @Final
-    @Shadow
-    private Minecraft minecraft;
+public class MusicTrackerMixin {
+    @Unique private static final float FADE_SPEED = 0.2f; // Units per second (0.2f -> Fade across 5 seconds)
+    @Unique private static final float TICK_DELTA = 0.05f;
+    // Note: Assume game is at a constant 20 tps since MC doesn't have getTPS()
+    // The use of currentTimeMillis() is ditched since it is overly complex for this system
+    // The difference from this constant will only be noticeable if the game's TPS is extremely low
+    // If the game is lagging to that extent, smooth music blending is the least of the player's worries
 
-    @Final
-    @Shadow
-    private RandomSource random;
+    @Unique private final MusicManager bn_thisObj = (MusicManager)(Object)this;
+    @Unique private boolean bn_waitChange = false;
+    @Unique private float bn_volume = 1.0f;
 
-    @Shadow
-    private SoundInstance currentMusic;
+    @Shadow @Final private Minecraft minecraft;
+    @Shadow @Final private RandomSource random;
+    @Shadow private SoundInstance currentMusic;
+    @Shadow private int nextSongDelay;
 
-    @Shadow
-    private int nextSongDelay;
+    @Unique
+    private boolean bn_isCorrectDimension() {
+        return minecraft.player != null && minecraft.level != null
+                && minecraft.level.dimension() == Level.NETHER;
+    }
 
-    private static float volume = 1;
-    private static float srcVolume = 0;
-    private static long time;
+    @Unique
+    private boolean bn_shouldChangeMusic(Music toMusic) {
+        return currentMusic == null || !toMusic.getEvent().value().getLocation().equals(currentMusic.getLocation());
+    }
+
+    @Inject(method = "startPlaying", at = @At("TAIL"))
+    public void bn_startPlaying(Music music, CallbackInfo ci) {
+        bn_volume = 0.0f; // Mostly to fix issues when the blending system becomes desynced due to other dims
+    }
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
-    public void bn_onTick(CallbackInfo info) {
-        Music musicSound = minecraft.getSituationalMusic();
-        if (bn_checkNullSound(musicSound) && volume > 0 && bn_shouldChangeSound(musicSound) && bn_isInNether()) {
-            if (volume > 0) {
-                if (srcVolume < 0) {
-                    srcVolume = currentMusic.getVolume();
-                }
-                if (currentMusic instanceof AbstractSoundInstance) {
-                    ((AbstractSoundInstanceAccessor) currentMusic).setVolume(volume);
-                }
-                minecraft.getSoundManager()
-                         .updateSourceVolume(currentMusic.getSource(), currentMusic.getVolume() * volume);
-                long t = System.currentTimeMillis();
-                if (volume == 1 && time == 0) {
-                    time = t;
-                }
-                float delta = (t - time) * 0.0005F;
-                time = t;
-                volume -= delta;
-                if (volume < 0) {
-                    volume = 0;
-                }
-            }
-            if (volume == 0) {
-                volume = 1;
-                time = 0;
-                srcVolume = -1;
-                this.minecraft.getSoundManager().stop(this.currentMusic);
-                this.nextSongDelay = Mth.nextInt(this.random, 0, musicSound.getMinDelay() / 2);
-                this.currentMusic = null;
-            }
-            if (this.currentMusic == null && this.nextSongDelay-- <= 0) {
-                this.startPlaying(musicSound);
-            }
-            info.cancel();
-        } else {
-            volume = 1;
+    public void bn_onTick(CallbackInfo ci) {
+        if (!bn_isCorrectDimension()) {
+            return;
         }
-    }
 
-    @Unique
-    private boolean bn_isInNether() {
-        return minecraft.level != null && minecraft.level.dimension() == Level.NETHER;
-    }
+        Music targetMusic = minecraft.getSituationalMusic();
+        if (targetMusic == null || !targetMusic.replaceCurrentMusic()) {
+            return; // If the target music cannot replace the current, let vanilla handle it
+        }
 
-    @Unique
-    private boolean bn_shouldChangeSound(Music musicSound) {
-        return currentMusic != null && !musicSound
-                .getEvent()
-                .value()
-                .getLocation()
-                .equals(this.currentMusic.getLocation()) && musicSound.replaceCurrentMusic();
-    }
+        boolean volumeChanged = false;
+        if (bn_waitChange || bn_shouldChangeMusic(targetMusic)) {
+            if (bn_volume > 0.0f) {
+                // Fade out current music
+                volumeChanged = true;
+                bn_volume -= FADE_SPEED * TICK_DELTA;
+                nextSongDelay = random.nextInt(0, Math.max(targetMusic.getMinDelay() / 2, 1));
+                if (bn_volume <= 0.0f) {
+                    bn_thisObj.stopPlaying();
+                }
+            } else if (nextSongDelay > 0) {
+                // In-between music delay
+                nextSongDelay -= 1;
+                bn_waitChange = true;
+            } else {
+                // Start new music
+                bn_waitChange = false;
+                bn_thisObj.startPlaying(targetMusic);
+            }
+        } else if (bn_volume < 1.0f) {
+            // Fade in new music
+            volumeChanged = true;
+            bn_volume += FADE_SPEED * TICK_DELTA;
+        }
 
-    @Unique
-    private boolean bn_checkNullSound(Music musicSound) {
-        return musicSound != null && musicSound.getEvent() != null;
-    }
+        if (volumeChanged) {
+            bn_volume = Mth.clamp(bn_volume, 0.0f, 1.0f);
+            if (currentMusic instanceof AbstractSoundInstanceAccessor accessor) {
+                accessor.setVolume(bn_volume);
+                minecraft.getSoundManager().updateSourceVolume(currentMusic.getSource(), currentMusic.getVolume());
+            }
+        }
 
-    @Shadow
-    public abstract void startPlaying(Music type);
+        ci.cancel();
+    }
 }
