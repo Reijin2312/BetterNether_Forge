@@ -53,32 +53,72 @@ public class MusicTrackerMixin {
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     public void bn_onTick(CallbackInfo ci) {
         if (!bn_isCorrectDimension()) {
+            bn_waitChange = false;
+            bn_volume = 1.0f;
             return;
         }
 
         Music targetMusic = minecraft.getSituationalMusic();
         if (targetMusic == null || !targetMusic.replaceCurrentMusic()) {
+            bn_waitChange = false;
+            bn_volume = 1.0f;
             return; // If the target music cannot replace the current, let vanilla handle it
+        }
+
+        if (currentMusic != null && !minecraft.getSoundManager().isActive(currentMusic)) {
+            currentMusic = null;
+            nextSongDelay = Math.min(
+                    nextSongDelay,
+                    Mth.nextInt(random, targetMusic.getMinDelay(), targetMusic.getMaxDelay())
+            );
+        }
+        nextSongDelay = Math.min(nextSongDelay, targetMusic.getMaxDelay());
+
+        if (currentMusic == null) {
+            if (nextSongDelay-- <= 0) {
+                bn_waitChange = false;
+                bn_thisObj.startPlaying(targetMusic);
+                if (currentMusic instanceof AbstractSoundInstanceAccessor accessor) {
+                    accessor.setVolume(0.0f);
+                    minecraft.getSoundManager().updateSourceVolume(
+                            currentMusic.getSource(),
+                            currentMusic.getVolume()
+                    );
+                }
+            }
+            ci.cancel();
+            return;
         }
 
         boolean volumeChanged = false;
         if (bn_waitChange || bn_shouldChangeMusic(targetMusic)) {
+            if (!bn_waitChange) {
+                nextSongDelay = random.nextInt(0, Math.max(targetMusic.getMinDelay() / 2, 1));
+                bn_waitChange = true;
+            }
             if (bn_volume > 0.0f) {
                 // Fade out current music
                 volumeChanged = true;
                 bn_volume -= FADE_SPEED * TICK_DELTA;
-                nextSongDelay = random.nextInt(0, Math.max(targetMusic.getMinDelay() / 2, 1));
                 if (bn_volume <= 0.0f) {
-                    bn_thisObj.stopPlaying();
+                    bn_volume = 0.0f;
+                    minecraft.getSoundManager().stop(currentMusic);
+                    currentMusic = null;
                 }
             } else if (nextSongDelay > 0) {
                 // In-between music delay
                 nextSongDelay -= 1;
-                bn_waitChange = true;
             } else {
                 // Start new music
                 bn_waitChange = false;
                 bn_thisObj.startPlaying(targetMusic);
+                if (currentMusic instanceof AbstractSoundInstanceAccessor accessor) {
+                    accessor.setVolume(0.0f);
+                    minecraft.getSoundManager().updateSourceVolume(
+                            currentMusic.getSource(),
+                            currentMusic.getVolume()
+                    );
+                }
             }
         } else if (bn_volume < 1.0f) {
             // Fade in new music
