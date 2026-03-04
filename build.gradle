@@ -19,6 +19,18 @@ plugins {
     id 'net.minecraftforge.gradle' version "${forgegradle_version}"
     id 'org.spongepowered.mixin' version "0.7.+"
     id 'maven-publish'
+    id "com.diffplug.spotless" version "6.25.0"
+}
+
+spotless {
+    java {
+        target 'src/*/java/**/*.java'
+        targetExclude 'src/main/generated/**'
+        trimTrailingWhitespace()
+        endWithNewline()
+        removeUnusedImports()
+        indentWithSpaces(4)
+    }
 }
 
 def enablePublishing = project.ext.enablePublishing
@@ -50,6 +62,8 @@ repositories {
     maven { url 'https://maven.terraformersmc.com' }
     maven { url 'https://maven.ambertation.de/releases' }
     maven { url 'https://repo.spongepowered.org/repository/maven-public/' }
+    maven { url "https://www.cursemaven.com" }
+    maven { url "https://api.modrinth.com/maven" }
     flatDir { dirs 'libs' }
 }
 
@@ -142,24 +156,33 @@ dependencies {
     compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 
     compileOnly "mcp.mobius.waila:wthit-api:forge-${project.wthit_version}"
-    runtimeOnly fg.deobf("mcp.mobius.waila:wthit:forge-${project.wthit_version}")
-    runtimeOnly fg.deobf("lol.bai:badpackets:${badpackets_version}")
+    //runtimeOnly fg.deobf("mcp.mobius.waila:wthit:forge-${project.wthit_version}")
+    //runtimeOnly fg.deobf("lol.bai:badpackets:${badpackets_version}")
 
     compileOnly "dev.emi:emi-forge:${emi_version}:api"
-    runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
+    //runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
+
+    compileOnly fg.deobf("mezz.jei:jei-1.20.1-forge:${project.jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:${project.jei_version}")
+
+    //test jade
+    compileOnly fg.deobf("maven.modrinth:jade:11.13.2+forge")
+    compileOnly fg.deobf("maven.modrinth:kiwi:11.9.2+forge")
+    runtimeOnly fg.deobf("maven.modrinth:jade:11.13.2+forge")
+    runtimeOnly fg.deobf("maven.modrinth:kiwi:11.9.2+forge")
 
     println "Using local BCLib: ${local_bclib}"
     if (local_bclib) {
         implementation project(path: ":BCLib", configuration: 'dev')
-    } else {
-        implementation "org.betterx.bclib:bclib:${project.bclib_version}"
-    }
+        } else {
+            implementation fg.deobf("curse.maven:bclib-forge-1435106:7654257")
+        }
 
     println "Using local WunderLib: ${local_wunderlib}"
     if (local_wunderlib) {
         implementation project(path: ":WunderLib", configuration: 'dev')
     } else {
-        implementation "de.ambertation.wunderlib:wunderlib:${project.wunderlib_version}"
+        implementation fg.deobf("curse.maven:wunderlib-forge-1435097:7486522")
     }
 }
 
@@ -440,52 +463,7 @@ task nextVersion() {
     }
 }
 
-def distDir = new File(rootProject.projectDir.parentFile, "betterx-dist 1.20.1")
-def modrinthModsDir = new File("C:/Users/Redmi/AppData/Roaming/ModrinthApp/profiles/1.20.1 (1)/mods")
-def betterNetherReobfJar = layout.buildDirectory.file("reobfJar/output.jar")
-def bclibReobfJar = project(":BCLib").layout.buildDirectory.file("reobfJar/output.jar")
-def wunderlibReobfJar = project(":WunderLib").layout.buildDirectory.file("reobfJar/output.jar")
-tasks.register("copyDistJars", Copy) {
-    dependsOn(tasks.named("reobfJar"))
-    from(betterNetherReobfJar) {
-        rename { tasks.named("jar").get().archiveFileName.get() }
-    }
-    if (local_bclib) {
-        dependsOn(project(":BCLib").tasks.named("reobfJar"))
-        from(bclibReobfJar) {
-            rename { project(":BCLib").tasks.named("jar").get().archiveFileName.get() }
-        }
-    }
-    if (local_wunderlib) {
-        dependsOn(project(":WunderLib").tasks.named("reobfJar"))
-        from(wunderlibReobfJar) {
-            rename { project(":WunderLib").tasks.named("jar").get().archiveFileName.get() }
-        }
-    }
-    into(distDir)
-}
-
-tasks.register("copyModrinthJars", Copy) {
-    dependsOn(tasks.named("reobfJar"))
-    from(betterNetherReobfJar) {
-        rename { tasks.named("jar").get().archiveFileName.get() }
-    }
-    if (local_bclib) {
-        dependsOn(project(":BCLib").tasks.named("reobfJar"))
-        from(bclibReobfJar) {
-            rename { project(":BCLib").tasks.named("jar").get().archiveFileName.get() }
-        }
-    }
-    if (local_wunderlib) {
-        dependsOn(project(":WunderLib").tasks.named("reobfJar"))
-        from(wunderlibReobfJar) {
-            rename { project(":WunderLib").tasks.named("jar").get().archiveFileName.get() }
-        }
-    }
-    into(modrinthModsDir)
-}
-
 tasks.named("build") {
     dependsOn(tasks.named("generateBetterXResources"))
-    finalizedBy("copyDistJars", "copyModrinthJars")
+    //finalizedBy("copyDistJars", "copyModrinthJars")
 }

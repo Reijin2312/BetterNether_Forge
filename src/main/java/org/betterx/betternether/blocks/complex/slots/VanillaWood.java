@@ -30,4 +30,3 @@ public class VanillaWood extends VanillaFallback<VanillaWood> {
         return new VanillaWood(baseName, plank.defaultMapColor(), plank.defaultMapColor()).init();
     }
 }
-

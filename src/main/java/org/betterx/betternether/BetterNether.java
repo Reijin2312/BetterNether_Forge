@@ -11,7 +11,6 @@ import org.betterx.betternether.enchantments.ObsidianBreaker;
 import org.betterx.betternether.loot.BNLoot;
 import org.betterx.betternether.recipes.IntegrationRecipes;
 import org.betterx.betternether.registry.*;
-import org.betterx.betternether.registry.features.configured.NetherVegetation;
 import org.betterx.betternether.tab.CreativeTabs;
 import org.betterx.betternether.world.BNWorldGenerator;
 import org.betterx.worlds.together.util.Logger;
@@ -157,4 +156,3 @@ public class BetterNether {
         return new ResourceLocation(MOD_ID, path);
     }
 }
-

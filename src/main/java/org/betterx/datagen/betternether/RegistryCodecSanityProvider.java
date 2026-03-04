@@ -1,7 +1,6 @@
 package org.betterx.datagen.betternether;
 
 import org.betterx.betternether.BetterNether;
-import org.betterx.datagen.betternether.NetherRegistrySupplier;
 import org.betterx.worlds.together.surfaceRules.SurfaceRuleRegistry;
 
 import com.mojang.serialization.Codec;
