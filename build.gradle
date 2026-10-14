@@ -377,7 +377,7 @@ if (enablePublishing) {
         loaders = ["forge"]
         changelog = changes
         dependencies {
-            required.project "bclib"
+            required.project "bclib-forge"
             optional.project "emi"
             optional.project "wthit"
         }
@@ -401,7 +401,7 @@ if (enablePublishing) {
         }
 
         project {
-            id = '311377'
+            id = project.curseforge_project_id
             changelogType = 'markdown'
             changelog = changes
             releaseType = project.release_channel
@@ -414,7 +414,7 @@ if (enablePublishing) {
             addGameVersion 'Forge'
             addGameVersion 'Java 17'
             relations {
-                requiredDependency 'bclib'
+                requiredDependency 'bclib-forge'
                 optionalDependency 'emi'
                 optionalDependency 'wthit'
             }
