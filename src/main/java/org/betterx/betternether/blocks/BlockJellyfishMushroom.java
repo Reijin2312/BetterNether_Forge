@@ -30,9 +30,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.ModList;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
 
 import com.google.common.collect.Lists;
 
@@ -51,7 +51,7 @@ public class BlockJellyfishMushroom extends BlockBaseNotFull implements AddMinea
                        .sound(SoundType.FUNGUS)
                        .strength(1)
                        .noOcclusion());
-        boolean sodium = ModList.get().isLoaded("sodium");
+        boolean sodium = FabricLoader.getInstance().isModLoaded("sodium");
         this.setRenderLayer(sodium ? BNRenderLayer.CUTOUT : BNRenderLayer.TRANSLUCENT);
     }
 
@@ -66,12 +66,12 @@ public class BlockJellyfishMushroom extends BlockBaseNotFull implements AddMinea
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
         return new ItemStack(NetherBlocks.JELLYFISH_MUSHROOM_SAPLING);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }

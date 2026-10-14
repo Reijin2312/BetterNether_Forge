@@ -10,13 +10,13 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class BlockObsidianGlass extends BlockBaseNotFull implements BehaviourImmobile, BehaviourPortalFrame, BehaviourGlass {
     public BlockObsidianGlass() {
-        super(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN)
+        super(FabricBlockSettings.copyOf(Blocks.OBSIDIAN)
                                  .noOcclusion()
                                  .isSuffocating((arg1, arg2, arg3) -> {
                                      return false;
@@ -27,7 +27,7 @@ public class BlockObsidianGlass extends BlockBaseNotFull implements BehaviourImm
         this.setRenderLayer(BNRenderLayer.TRANSLUCENT);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
@@ -37,7 +37,7 @@ public class BlockObsidianGlass extends BlockBaseNotFull implements BehaviourImm
         return true;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public boolean skipRendering(BlockState state, BlockState neighbor, Direction facing) {
         return neighbor.getBlock() == this || super.skipRendering(state, neighbor, facing);
     }

@@ -2,6 +2,7 @@ package org.betterx.betternether.blocks.complex;
 
 import org.betterx.betternether.blocks.BNGlass;
 import org.betterx.betternether.blocks.BNPane;
+import org.betterx.betternether.config.Configs;
 import org.betterx.betternether.recipes.RecipesHelper;
 import org.betterx.betternether.registry.NetherBlocks;
 
@@ -91,8 +92,10 @@ public class ColoredGlassMaterial {
     ) {
         Block block = isFullBlock ? new BNGlass(base) : BNPane.from(base, paneDropItself);
         String name = group + "_" + ((DyeItem) dye).getDyeColor().getSerializedName();
-        NetherBlocks.registerBlockDirectly(name, block);
-        RecipesHelper.makeColoringRecipe(base, block, dye, group, category);
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            NetherBlocks.registerBlockDirectly(name, block);
+            RecipesHelper.makeColoringRecipe(base, block, dye, group, category);
+        }
         return block;
     }
 }

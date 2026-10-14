@@ -24,8 +24,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +38,7 @@ class ReedBookshelfBlock extends BaseBookshelfBlock.Wood {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public @Nullable BlockModel getBlockModel(ResourceLocation blockId, BlockState blockState) {
         Optional<String> pattern = PatternsHelper.createJson(Patterns.REED_BLOCK_BOOKSHELF, replacePath(blockId));
         return ModelsHelper.fromPattern(pattern);

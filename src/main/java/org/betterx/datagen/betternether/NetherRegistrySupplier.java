@@ -33,7 +33,7 @@ public class NetherRegistrySupplier extends RegistrySupplier {
 
     @Override
     protected List<RegistryInfo<?>> initializeRegistryList(@Nullable List<String> modIDs) {
-        List<RegistryInfo<?>> registries = List.of(
+        return List.of(
                 new RegistryInfo<>(
                         BCLBiomeRegistry.BCL_BIOMES_REGISTRY,
                         BiomeData.CODEC,
@@ -41,8 +41,7 @@ public class NetherRegistrySupplier extends RegistrySupplier {
                 ),
                 new RegistryInfo<>(
                         SurfaceRuleRegistry.SURFACE_RULES_REGISTRY,
-                        AssignedSurfaceRule.CODEC,
-                        SurfaceRuleRegistry::bootstrap
+                        AssignedSurfaceRule.CODEC
                 ),
                 new RegistryInfo<>(
                         Registries.STRUCTURE,
@@ -74,16 +73,6 @@ public class NetherRegistrySupplier extends RegistrySupplier {
                         FlatLevelPresetsDataProvider::bootstrap
                 )
         );
-        registries.forEach(info -> BetterNether.LOGGER.info(
-                "[datagen] registry: {}, codec: {}",
-                info.key().location(),
-                info.elementCodec() == null ? "<null>" : info.elementCodec().getClass().getName()
-        ));
-        return registries;
-    }
-
-    public List<RegistryInfo<?>> registries() {
-        return super.registries();
     }
 
 

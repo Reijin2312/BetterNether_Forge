@@ -10,7 +10,6 @@ import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public enum BNToolMaterial implements Tier, SmithingSet {
     CINCINNASITE(2, 512, 6.2F, 2.5F, 16, NetherItems.CINCINNASITE_INGOT,
@@ -116,7 +115,6 @@ public enum BNToolMaterial implements Tier, SmithingSet {
     public Ingredient getRepairIngredient() {
         var item = reapair.asItem();
         if (item == Items.AIR) return Ingredient.EMPTY;
-        if (!ForgeRegistries.ITEMS.getDelegate(item).isPresent()) return Ingredient.EMPTY;
         return Ingredient.of(item);
     }
 

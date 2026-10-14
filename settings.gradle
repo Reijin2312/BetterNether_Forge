@@ -1,6 +1,9 @@
 pluginManagement {
     repositories {
-        maven { url = 'https://maven.minecraftforge.net/' }
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
         gradlePluginPortal()
     }
 }
@@ -13,8 +16,8 @@ def allowLocalLibUse = true
 def allowLocalLibInConsoleMode = true
 
 //The path were to look for the local BCLib
-def BCLibPath = '../BCLib-1.20.1'
-def WunderLibPath = '../WunderLib-1.20.1'
+def BCLibPath = '../BCLib-Fabric-1.20.1'
+def WunderLibPath = '../WunderLib-Fabric-1.20.1'
 
 
 // #### Logic ####
@@ -45,4 +48,4 @@ if (allowLocalLibUse && (isIDE || allowLocalLibInConsoleMode) && BCLibFolder.exi
     include ':WunderLib'
     project(":WunderLib").projectDir = WunderLibFolder
     project(':WunderLib').buildFileName = './wunderlib-composit.gradle'
-}
+} 

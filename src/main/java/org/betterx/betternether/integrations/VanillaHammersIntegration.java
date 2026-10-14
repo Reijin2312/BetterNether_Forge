@@ -6,7 +6,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 
-import net.minecraftforge.fml.ModList;
+import net.fabricmc.loader.api.FabricLoader;
 
 import org.apache.logging.log4j.LogManager;
 
@@ -33,7 +33,7 @@ public class VanillaHammersIntegration {
     }
 
     static {
-        hasHammers = ModList.get().isLoaded("vanilla-hammers");
+        hasHammers = FabricLoader.getInstance().isModLoaded("vanilla-hammers");
         try {
             if (hasHammers) {
                 LogManager.getLogger().info("[BetterNether] Enabled Vanilla Hammers Integration");

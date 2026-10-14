@@ -9,13 +9,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class BlockCincinnasitePedestal extends BlockBaseNotFull implements BehaviourMetal {
     private static final VoxelShape SHAPE = box(2, 0, 2, 14, 16, 14);
 
     public BlockCincinnasitePedestal() {
-        super(BlockBehaviour.Properties.copy(NetherBlocks.CINCINNASITE_BLOCK).noOcclusion());
+        super(FabricBlockSettings.copy(NetherBlocks.CINCINNASITE_BLOCK).noOcclusion());
     }
 
     @Override

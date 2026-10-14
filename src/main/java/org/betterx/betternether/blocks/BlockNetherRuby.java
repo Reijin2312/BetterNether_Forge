@@ -8,11 +8,11 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class BlockNetherRuby extends BlockBase implements CustomItemProvider, BehaviourStone {
     public BlockNetherRuby() {
-        super(BlockBehaviour.Properties.copy(Blocks.DIAMOND_BLOCK));
+        super(FabricBlockSettings.copyOf(Blocks.DIAMOND_BLOCK));
     }
 
     @Override

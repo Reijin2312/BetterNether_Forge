@@ -71,7 +71,7 @@
     "hidden": false,
     "icon": {
       "item": "betternether:cincinnasite_pickaxe_diamond",
-      "nbt": "{Damage:0}"
+      "nbt": "{Damage:0,Enchantments:[{id:\"betternether:obsidian_breaker\",lvl:2s}]}"
     },
     "show_toast": true,
     "title": {

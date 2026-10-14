@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "betternether:nether_ruby_ore"
   ]

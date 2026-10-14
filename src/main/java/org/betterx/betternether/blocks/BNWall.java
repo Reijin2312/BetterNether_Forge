@@ -7,7 +7,7 @@ import org.betterx.bclib.behaviours.interfaces.BehaviourStone;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.WallBlock;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class BNWall extends WallBlock implements DropSelfLootProvider<BNWall> {
     public static class Stone extends BNWall implements BehaviourStone {
@@ -23,7 +23,7 @@ public class BNWall extends WallBlock implements DropSelfLootProvider<BNWall> {
     }
 
     public BNWall(Block block) {
-        super(BlockBehaviour.Properties.copy(block).noOcclusion());
+        super(FabricBlockSettings.copyOf(block).noOcclusion());
     }
 
     public static BNWall from(Block source) {

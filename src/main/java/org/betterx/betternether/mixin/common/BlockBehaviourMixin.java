@@ -4,8 +4,8 @@ import org.betterx.betternether.enchantments.RubyFire;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -34,7 +34,7 @@ public class BlockBehaviourMixin {
         if (level instanceof ServerLevel server) {
             if (RubyFire.getDrops(brokenBlock, server, blockPos, player, breakingItem)) {
                 player.awardStat(Stats.BLOCK_MINED.get(brokenBlock.getBlock()));
-                player.causeFoodExhaustion(0.005f);
+                player.causeFoodExhaustion(0.005F);
                 ci.cancel();
             }
         }

@@ -71,7 +71,7 @@
     "hidden": false,
     "icon": {
       "item": "betternether:nether_ruby_pickaxe",
-      "nbt": "{Damage:0}"
+      "nbt": "{Damage:0,Enchantments:[{id:\"betternether:obsidian_breaker\",lvl:1s}]}"
     },
     "show_toast": true,
     "title": {

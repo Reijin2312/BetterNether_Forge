@@ -37,8 +37,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import com.google.common.collect.Lists;
 
@@ -75,7 +75,7 @@ public class BlockWhisperingGourdVine extends BlockBaseNotFull implements Boneme
         return upState.getBlock() == this || upState.isFaceSturdy(world, pos, Direction.DOWN);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }

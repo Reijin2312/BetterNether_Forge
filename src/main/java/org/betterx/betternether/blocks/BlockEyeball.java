@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class BlockEyeball extends BlockEyeBase {
     public BlockEyeball() {
@@ -27,7 +27,7 @@ public class BlockEyeball extends BlockEyeBase {
         );
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (random.nextInt(5) == 0) {
             double x = pos.getX() + random.nextDouble();

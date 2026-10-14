@@ -1,1 +1,12 @@
-﻿{"textures":{"end":"betternether:block/wart_stripped_log_top","side":"betternether:block/wart_stripped_log_side"},"parent":"minecraft:block/cube_column"}
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "betternether:block/wart_stripped_log_side",
+        "down": "betternether:block/wart_stripped_log_top",
+        "up": "betternether:block/wart_stripped_log_top",
+        "north": "betternether:block/wart_stripped_log_side",
+        "east": "betternether:block/wart_stripped_log_side",
+        "south": "betternether:block/wart_stripped_log_side",
+        "west": "betternether:block/wart_stripped_log_side"
+    }
+}

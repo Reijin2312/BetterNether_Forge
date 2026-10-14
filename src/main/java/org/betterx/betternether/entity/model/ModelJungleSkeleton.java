@@ -2,12 +2,12 @@ package org.betterx.betternether.entity.model;
 
 import org.betterx.betternether.MHelper;
 import org.betterx.betternether.entity.EntityJungleSkeleton;
-import net.minecraft.client.model.HumanoidModel;
+import org.betterx.betternether.mixin.client.TexturedModelDataMixin;
+
 import net.minecraft.client.model.SkeletonModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
@@ -23,38 +23,9 @@ public class ModelJungleSkeleton extends SkeletonModel<EntityJungleSkeleton> {
     private static final float BOUND_MAX = ANGLE90 * 4F / 5F;
 
     public static LayerDefinition createBodyLayer() {
-        MeshDefinition modelData = HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F);
+        LayerDefinition texturedModelData = SkeletonModel.createBodyLayer();
+        MeshDefinition modelData = ((TexturedModelDataMixin) texturedModelData).getMesh();
         PartDefinition modelPartData = modelData.getRoot();
-        modelPartData.addOrReplaceChild(
-                "right_arm",
-                CubeListBuilder.create()
-                               .texOffs(40, 16)
-                               .addBox(-1.0F, -2.0F, -1.0F, 2.0F, 12.0F, 2.0F),
-                PartPose.offset(-5.0F, 2.0F, 0.0F)
-        );
-        modelPartData.addOrReplaceChild(
-                "left_arm",
-                CubeListBuilder.create()
-                               .texOffs(40, 16)
-                               .mirror()
-                               .addBox(-1.0F, -2.0F, -1.0F, 2.0F, 12.0F, 2.0F),
-                PartPose.offset(5.0F, 2.0F, 0.0F)
-        );
-        modelPartData.addOrReplaceChild(
-                "right_leg",
-                CubeListBuilder.create()
-                               .texOffs(0, 16)
-                               .addBox(-1.0F, 0.0F, -1.0F, 2.0F, 12.0F, 2.0F),
-                PartPose.offset(-2.0F, 12.0F, 0.0F)
-        );
-        modelPartData.addOrReplaceChild(
-                "left_leg",
-                CubeListBuilder.create()
-                               .texOffs(0, 16)
-                               .mirror()
-                               .addBox(-1.0F, 0.0F, -1.0F, 2.0F, 12.0F, 2.0F),
-                PartPose.offset(2.0F, 12.0F, 0.0F)
-        );
         PartDefinition modelPartData_HEAD = modelPartData.getChild(PartNames.HEAD);
 
         for (int i = 0; i < 4; i++) {
@@ -85,14 +56,14 @@ public class ModelJungleSkeleton extends SkeletonModel<EntityJungleSkeleton> {
                             0
                     )
             );
-            /*ModelPart leaf = new ModelPart(this, 24, 0);
-            leaf.setPivot((float) -Math.sin(angle), -8, (float) -Math.cos(angle));
-            leaf.addCuboid(-3.0F, -8.0F, 0.0F, 6.0F, 8.0F, 0.0F);
-            leaf.pitch = MHelper.randRange(BOUND_MIN, BOUND_MAX, RANDOM);
-            leaf.yaw = angle;
-            this.head.addChild(leaf);*/
+			/*ModelPart leaf = new ModelPart(this, 24, 0);
+			leaf.setPivot((float) -Math.sin(angle), -8, (float) -Math.cos(angle));
+			leaf.addCuboid(-3.0F, -8.0F, 0.0F, 6.0F, 8.0F, 0.0F);
+			leaf.pitch = MHelper.randRange(BOUND_MIN, BOUND_MAX, RANDOM);
+			leaf.yaw = angle;
+			this.head.addChild(leaf);*/
         }
-        return LayerDefinition.create(modelData, 64, 32);
+        return texturedModelData;
     }
 
     public ModelJungleSkeleton(ModelPart modelPart) {

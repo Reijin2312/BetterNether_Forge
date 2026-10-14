@@ -60,7 +60,13 @@ public class NetherVinesPlaced {
             .onceEvery(2)
             .build();
 
-    public static BCLFeature TWISTING_VINES;
+    public static final BCLFeature TWISTING_VINES = NetherVines
+            .PATCH_TWISTING_VINES
+            .place()
+            .decoration(GenerationStep.Decoration.VEGETAL_DECORATION)
+            .vanillaNetherGround(12)
+            .onceEvery(2)
+            .build();
 
     public static final BCLFeature NEON_EQUISETUM = NetherVines
             .PATCH_NEON_EQUISETUM
@@ -78,25 +84,6 @@ public class NetherVinesPlaced {
             .onceEvery(2)
             .build();
 
-    private static void initTwistingVines() {
-        if (TWISTING_VINES != null) {
-            return;
-        }
-        TWISTING_VINES = NetherVines
-                .patchTwistingVines()
-                .place()
-                .decoration(GenerationStep.Decoration.VEGETAL_DECORATION)
-                .vanillaNetherGround(12)
-                .onceEvery(2)
-                .build();
-    }
-
-    public static BCLFeature twistingVines() {
-        initTwistingVines();
-        return TWISTING_VINES;
-    }
-
     public static void ensureStaticInitialization() {
-        initTwistingVines();
     }
 }

@@ -20,8 +20,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class BlockMushroomFir extends BlockBaseNotFull implements BehaviourWood {
     public static final EnumProperty<MushroomFirShape> SHAPE = EnumProperty.create("shape", MushroomFirShape.class);
@@ -98,7 +98,7 @@ public class BlockMushroomFir extends BlockBaseNotFull implements BehaviourWood 
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
         MushroomFirShape shape = state.getValue(SHAPE);
         return shape == MushroomFirShape.BOTTOM || shape == MushroomFirShape.MIDDLE

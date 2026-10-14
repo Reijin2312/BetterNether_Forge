@@ -3,8 +3,8 @@
 	"textures": {
 		"particle": "block/crimson_fungus",
 		"texture": "block/crimson_fungus",
-		"top": "block/crimson_fungus_top",
-		"bottom": "block/crimson_fungus_bottom"
+		"top": "blocks/crimson_fungus_top",
+		"bottom": "blocks/crimson_fungus_bottom"
 	},
 	"elements": [ 	 
 		{

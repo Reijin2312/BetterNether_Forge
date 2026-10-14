@@ -2,6 +2,7 @@ package org.betterx.betternether.blocks;
 
 import org.betterx.bclib.behaviours.BehaviourBuilders;
 import org.betterx.bclib.behaviours.interfaces.BehaviourClimableVine;
+import org.betterx.betternether.blocks.materials.Materials;
 import org.betterx.betternether.registry.NetherBlocks;
 
 import net.minecraft.core.BlockPos;
@@ -16,8 +17,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class BlockEyeVine extends BlockBaseNotFull implements BehaviourClimableVine {
     protected static final VoxelShape SHAPE = box(4, 0, 4, 12, 16, 12);
@@ -36,7 +37,7 @@ public class BlockEyeVine extends BlockBaseNotFull implements BehaviourClimableV
         return SHAPE;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
@@ -66,7 +67,7 @@ public class BlockEyeVine extends BlockBaseNotFull implements BehaviourClimableV
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
         return new ItemStack(NetherBlocks.EYE_SEED);
     }

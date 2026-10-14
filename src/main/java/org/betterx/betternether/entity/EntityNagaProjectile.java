@@ -14,8 +14,8 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class EntityNagaProjectile extends FlyingMob {
     private static final int MAX_LIFE_TIME = 60; // 3 seconds * 20 ticks
@@ -40,7 +40,7 @@ public class EntityNagaProjectile extends FlyingMob {
         return true;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public boolean shouldRenderAtSqrDistance(double distance) {
         return distance < 128;
     }

@@ -12,8 +12,8 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 class BNDripHangParticle extends DripParticle.DripHangParticle {
     public BNDripHangParticle(
@@ -69,7 +69,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
     private static final float BLUE_DRIP_B = 0xf9 / 255.0f;
 
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianTearLandProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -96,7 +96,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
     }
 
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianTearFallProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -129,7 +129,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianTearHangProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -163,7 +163,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
     }
 
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianWeepLandProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -189,7 +189,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianWeepFallProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -222,7 +222,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianWeepHangProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -259,7 +259,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
     private static final float DRIP_G = 0.03125F;
     private static final float DRIP_B = 0.890625F;
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianVanillaWeepLandProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -285,7 +285,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianVanillaWeepFallProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -318,7 +318,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianVanillaWeepHangProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 

@@ -8,8 +8,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * The dark gloomwood log with lava still in it - the block at the foot of a tree standing on molten
@@ -31,7 +29,6 @@ public class BlockMoltenGloomwoodLog extends RotatedPillarBlock {
         super(settings);
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         for (int i = 0; i < EMBERS; i++) {

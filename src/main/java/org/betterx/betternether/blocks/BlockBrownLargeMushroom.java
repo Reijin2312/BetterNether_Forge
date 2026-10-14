@@ -22,8 +22,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class BlockBrownLargeMushroom extends BlockBaseNotFull implements AddMineableAxe {
     private static final VoxelShape TOP_CENTER_SHAPE = box(0, 0.1, 0, 16, 16, 16);
@@ -51,7 +51,7 @@ public class BlockBrownLargeMushroom extends BlockBaseNotFull implements AddMine
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
         BrownMushroomShape shape = state.getValue(SHAPE);
         return shape == BrownMushroomShape.BOTTOM || shape == BrownMushroomShape.MIDDLE

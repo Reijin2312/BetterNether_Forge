@@ -13,8 +13,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class BlockBlackApple extends BlockCommonPlant implements SurvivesOnNetherGround, BehaviourPlant {
     private static final VoxelShape SHAPE = box(4, 0, 4, 12, 16, 12);
@@ -29,7 +29,7 @@ public class BlockBlackApple extends BlockCommonPlant implements SurvivesOnNethe
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
         return new ItemStack(NetherBlocks.BLACK_APPLE_SEED);
     }

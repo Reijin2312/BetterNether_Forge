@@ -14,8 +14,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class BlockEyeballSmall extends BlockEyeBase {
     protected static final VoxelShape SHAPE = Block.box(4, 8, 4, 12, 16, 12);
@@ -32,7 +32,7 @@ public class BlockEyeballSmall extends BlockEyeBase {
         return SHAPE;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (random.nextInt(5) == 0) {
             double x = pos.getX() + random.nextDouble() * 0.5 + 0.25;

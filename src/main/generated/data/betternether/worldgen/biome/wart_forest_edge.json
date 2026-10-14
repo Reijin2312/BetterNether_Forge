@@ -1,6 +1,6 @@
 {
   "carvers": {
-    "air": "minecraft:nether_cave",
+    "air": [],
     "liquid": []
   },
   "downfall": 0.0,

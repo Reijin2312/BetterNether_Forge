@@ -36,7 +36,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourMetal {
     private static final VoxelShape SHAPE = box(1, 0, 1, 15, 16, 15);
@@ -52,7 +52,7 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
     private final ItemStack requiredItem;
 
     public BlockStatueRespawner() {
-        super(BlockBehaviour.Properties.copy(NetherBlocks.CINCINNASITE_BLOCK).lightLevel(state -> 15).noOcclusion());
+        super(FabricBlockSettings.copyOf(NetherBlocks.CINCINNASITE_BLOCK).luminance(15).noOcclusion());
         this.setRenderLayer(BNRenderLayer.CUTOUT);
         this.registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(TOP, false));
         this.setDropItself(false);

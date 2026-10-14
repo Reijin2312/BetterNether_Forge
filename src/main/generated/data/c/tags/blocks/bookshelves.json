@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "betternether:anchor_tree_bookshelf",
     "betternether:crimson_bookshelf",
@@ -10,7 +11,6 @@
     "betternether:stalagnate_bookshelf",
     "betternether:warped_bookshelf",
     "betternether:wart_bookshelf",
-    "betternether:willow_bookshelf",
-    "minecraft:bookshelf"
+    "betternether:willow_bookshelf"
   ]
 }

@@ -6,7 +6,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 
-import net.minecraftforge.fml.ModList;
+import net.fabricmc.loader.api.FabricLoader;
 
 import org.apache.logging.log4j.LogManager;
 
@@ -33,7 +33,7 @@ public class VanillaExcavatorsIntegration {
     }
 
     static {
-        hasExcavators = ModList.get().isLoaded("vanillaexcavators");
+        hasExcavators = FabricLoader.getInstance().isModLoaded("vanillaexcavators");
         try {
             if (hasExcavators) {
                 LogManager.getLogger().info("[BetterNether] Enabled Vanilla Excavators Integration");

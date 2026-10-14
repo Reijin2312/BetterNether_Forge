@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class BlockSoulSandstone extends BlockBase implements TagProvider, Behavi
     public static final BooleanProperty UP = BooleanProperty.create("up");
 
     public BlockSoulSandstone() {
-        super(BlockBehaviour.Properties.copy(Blocks.SANDSTONE));
+        super(FabricBlockSettings.copyOf(Blocks.SANDSTONE));
     }
 
     @Override

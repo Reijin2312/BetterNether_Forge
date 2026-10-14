@@ -3,15 +3,11 @@ package org.betterx.betternether.blocks;
 import org.betterx.bclib.api.v3.bonemeal.BonemealNyliumLike;
 import org.betterx.bclib.api.v3.levelgen.features.BCLConfigureFeature;
 import org.betterx.bclib.behaviours.interfaces.BehaviourStone;
-import org.betterx.bclib.interfaces.TagProvider;
 import org.betterx.bclib.util.LootUtil;
-import org.betterx.worlds.together.tag.v3.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -27,21 +23,19 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import java.util.Collections;
 import java.util.List;
 
-public class BlockNetherMycelium extends BlockBase implements BonemealNyliumLike, BehaviourStone, TagProvider {
+public class BlockNetherMycelium extends BlockBase implements BonemealNyliumLike, BehaviourStone {
     public static final BooleanProperty IS_BLUE = BooleanProperty.create("blue");
     private BCLConfigureFeature<? extends Feature<?>, ?> vegetationFeature;
 
     public BlockNetherMycelium() {
-        super(BlockBehaviour.Properties.copy(Blocks.NETHERRACK)
-                                       .mapColor(MapColor.COLOR_GRAY)
-                                       .requiresCorrectToolForDrops());
+        super(FabricBlockSettings.copyOf(Blocks.NETHERRACK).mapColor(MapColor.COLOR_GRAY).requiresTool());
         this.registerDefaultState(getStateDefinition().any().setValue(IS_BLUE, false));
         this.setDropItself(false);
     }
@@ -55,7 +49,7 @@ public class BlockNetherMycelium extends BlockBase implements BonemealNyliumLike
         stateManager.add(IS_BLUE);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         super.animateTick(state, world, pos, random);
         world.addParticle(ParticleTypes.MYCELIUM,
@@ -101,11 +95,5 @@ public class BlockNetherMycelium extends BlockBase implements BonemealNyliumLike
     @Override
     public BCLConfigureFeature<? extends Feature<?>, ?> getCoverFeature() {
         return vegetationFeature;
-    }
-
-    @Override
-    public void addTags(List<TagKey<Block>> blockTags, List<TagKey<Item>> itemTags) {
-        blockTags.add(CommonBlockTags.NETHER_MYCELIUM);
-        blockTags.add(CommonBlockTags.MYCELIUM);
     }
 }

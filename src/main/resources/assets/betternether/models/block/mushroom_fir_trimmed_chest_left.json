@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/chest_left",
-  "textures": {
-    "particle": "betternether:block/mushroom_fir_planks"
-  }
-}

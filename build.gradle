@@ -1,47 +1,8 @@
-buildscript {
-    def enablePublishing = project.hasProperty("publishMods") || System.getenv("PUBLISH_MODS") == "true"
-    if (enablePublishing) {
-        repositories {
-            maven { url "https://plugins.gradle.org/m2/" }
-        }
-        dependencies {
-            classpath "com.modrinth.minotaur:Minotaur:2.+"
-            classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
-        }
-    }
-    project.ext.enablePublishing = enablePublishing
-}
-
 plugins {
-    id 'java-library'
-    id 'idea'
-    id 'eclipse'
-    id 'net.minecraftforge.gradle' version "${forgegradle_version}"
-    id 'org.spongepowered.mixin' version "0.7.+"
+    id 'fabric-loom' version "${loom_version}"
     id 'maven-publish'
-    id "com.diffplug.spotless" version "6.25.0"
-}
-
-spotless {
-    java {
-        target 'src/*/java/**/*.java'
-        targetExclude 'src/main/generated/**'
-        trimTrailingWhitespace()
-        endWithNewline()
-        removeUnusedImports()
-        indentWithSpaces(4)
-    }
-}
-
-tasks.matching { it.name == "spotlessJavaCheck" || it.name == "spotlessCheck" }.configureEach {
-    dependsOn(tasks.named("spotlessApply"))
-}
-
-def enablePublishing = project.ext.enablePublishing
-
-if (enablePublishing) {
-    apply plugin: "com.modrinth.minotaur"
-    apply plugin: "com.matthewprenger.cursegradle"
+    id "com.modrinth.minotaur" version "2.+"
+    id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -50,57 +11,29 @@ targetCompatibility = JavaVersion.VERSION_17
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
-def refmapName = "${project.mod_id}.refmap.json"
-
 def local_bclib = findProject(':BCLib') != null
 def local_wunderlib = findProject(':WunderLib') != null
 
-repositories {
-    maven { url "https://maven.minecraftforge.net" }
-    maven { url "https://maven.dblsaiko.net/" }
-    maven { url "https://maven.shedaniel.me/" }
-    maven { url 'https://maven.blamejared.com' }
-    maven { url 'https://jitpack.io' }
-    maven { url "https://maven.bai.lol" }
-    maven { url 'https://maven.terraformersmc.com/releases' }
-    maven { url 'https://maven.terraformersmc.com' }
-    maven { url 'https://maven.ambertation.de/releases' }
-    maven { url 'https://repo.spongepowered.org/repository/maven-public/' }
-    maven { url "https://www.cursemaven.com" }
-    maven { url "https://api.modrinth.com/maven" }
-    flatDir { dirs 'libs' }
-}
-
-minecraft {
-    mappings channel: "official", version: project.minecraft_version
-    accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
+loom {
+    accessWidenerPath = file("src/main/resources/betternether.accesswidener")
     runs {
-        client {
-            workingDirectory project.file("run")
-            property "forge.logging.markers", "REGISTRIES"
-            property "forge.logging.console.level", "debug"
-        }
-        server {
-            workingDirectory project.file("run")
-            property "forge.logging.markers", "REGISTRIES"
-            property "forge.logging.console.level", "debug"
-        }
-        data {
-            workingDirectory project.file("run")
-            args "--mod", project.mod_id,
-                    "--all",
-                    "--output", file("src/main/generated").toString(),
-                    "--existing", file("src/main/resources").toString()
+        // This adds a new gradle task that runs the datagen API: "gradlew runDatagenClient"
+        datagenClient {
+            inherit client
+            name "Data Generation"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
+            vmArg "-Dfabric-api.datagen.strict-validation"
+            vmArg "-Dfabric-api.datagen.modid=betternether"
+
+            runDir "build/datagen"
         }
     }
 }
 
-mixin {
-    add sourceSets.main, "${project.mod_id}.refmap.json"
-}
-
 sourceSets {
     main {
+        // Add the datagenned files into the jar.
         resources {
             srcDirs += [
                     'src/main/generated'
@@ -109,182 +42,118 @@ sourceSets {
     }
 }
 
-def datagenTaskDeps = [tasks.matching { it.name == "runData" }]
-if (local_bclib) {
-    datagenTaskDeps << project(":BCLib").tasks.matching { it.name == "runData" }
-}
-if (local_wunderlib) {
-    datagenTaskDeps << project(":WunderLib").tasks.matching { it.name == "runData" }
-}
-
-tasks.register("generateBetterXResources") {
-    group = "forge"
-    description = "Runs datagen for BetterNether and local BetterX libraries."
-    dependsOn(datagenTaskDeps)
-}
-
-def generatedResourcesDir = file("src/main/generated")
-tasks.register("syncGeneratedResources", Copy) {
-    group = "forge"
-    description = "Syncs generated datagen resources into build outputs for dev runs."
-    from(generatedResourcesDir)
-    into(layout.buildDirectory.dir("resources/main"))
-    mustRunAfter(tasks.named("processResources"))
-}
-
-def connectorCompatSourceDir = file("src/main/generated/data/${project.mod_id}/worlds_together/worldgen/betterx")
-def connectorCompatTargetDir = file("src/main/generated/data/${project.mod_id}/worldgen/betterx")
-tasks.register("syncConnectorWorldgenCompat", Copy) {
-    group = "forge"
-    description = "Copies BetterX worldgen data to connector-compatible paths."
-    from(connectorCompatSourceDir)
-    into(connectorCompatTargetDir)
-    includeEmptyDirs = false
-    onlyIf { connectorCompatSourceDir.exists() }
-}
-
-tasks.named("syncGeneratedResources") {
-    mustRunAfter(tasks.named("syncConnectorWorldgenCompat"))
-}
-
-tasks.matching { it.name == "runData" }.configureEach {
-    finalizedBy(tasks.named("syncConnectorWorldgenCompat"))
-    finalizedBy(tasks.named("syncGeneratedResources"))
-}
-
 dependencies {
-    minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+    //to change the versions see the gradle.properties file
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
 
-    annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+    // Fabric API. This is technically optional, but you probably want it anyway.
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    compileOnly "mcp.mobius.waila:wthit-api:forge-${project.wthit_version}"
-    //runtimeOnly fg.deobf("mcp.mobius.waila:wthit:forge-${project.wthit_version}")
-    //runtimeOnly fg.deobf("lol.bai:badpackets:${badpackets_version}")
+    // https://mvnrepository.com/artifact/javax.annotation/jsr305
+    compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
 
-    compileOnly "dev.emi:emi-forge:${emi_version}:api"
-    //runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
 
-    compileOnly fg.deobf("mezz.jei:jei-1.20.1-forge:${project.jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:${project.jei_version}")
+    // compile against the API
+    modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${project.wthit_version}"
 
-    //test jade
-    compileOnly fg.deobf("maven.modrinth:jade:11.13.2+forge")
-    compileOnly fg.deobf("maven.modrinth:kiwi:11.9.2+forge")
-    runtimeOnly fg.deobf("maven.modrinth:jade:11.13.2+forge")
-    runtimeOnly fg.deobf("maven.modrinth:kiwi:11.9.2+forge")
+    // run against the full jar
+    modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"
 
     println "Using local BCLib: ${local_bclib}"
     if (local_bclib) {
         implementation project(path: ":BCLib", configuration: 'dev')
-        } else {
-            implementation fg.deobf("curse.maven:bclib-forge-1435106:7654257")
-        }
-
-    println "Using local WunderLib: ${local_wunderlib}"
-    if (local_wunderlib) {
-        implementation project(path: ":WunderLib", configuration: 'dev')
     } else {
-        implementation fg.deobf("curse.maven:wunderlib-forge-1435097:7486522")
+        modImplementation "com.github.quiqueck:BCLib:${project.bclib_version}"
+    }
+
+    modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
+    modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
+
+    if (local_wunderlib) {
+        println "Using local WunderLib"
+        implementation project(path: ":WunderLib", configuration: 'dev')
+    }
+}
+
+repositories {
+    mavenCentral()
+    //mavenLocal()
+    maven { url 'https://jitpack.io' }
+    maven { url "https://maven.bai.lol" }
+    maven { url 'https://maven.terraformersmc.com' }
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+def useApi(String dep) {
+    dependencies.modImplementation(dep) {
+        exclude group: 'net.fabricmc.fabric-api'
+        exclude group: 'net.fabricmc'
+        if (!dep.contains("me.shedaniel")) {
+            exclude group: 'me.shedaniel.cloth'
+            exclude group: 'me.shedaniel'
+        }
     }
 }
 
 processResources {
-    println "Version: ${project.mod_version}"
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    inputs.property "version", project.mod_version
-    inputs.property "mod_id", project.mod_id
-    inputs.property "mod_name", project.mod_name
-    inputs.property "minecraft_version", project.minecraft_version
-    inputs.property "forge_version", project.forge_version
-    inputs.property "wthit_version", project.wthit_version
-    inputs.property "bclib_version", project.bclib_version
-
-    filesMatching("META-INF/mods.toml") {
-        expand(
-                "mod_id": project.mod_id,
-                "mod_name": project.mod_name,
-                "version": project.mod_version,
-                "minecraft_version": project.minecraft_version,
-                "forge_version": project.forge_version,
-                "wthit_version": project.wthit_version,
-                "bclib_version": project.bclib_version
-        )
+    println "Version: ${project.version}"
+    inputs.property "version", project.version
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
     }
 }
 
-tasks.withType(JavaCompile).configureEach {
-    def refmapOutput = layout.buildDirectory.file("resources/main/${refmapName}")
-    outputs.file(refmapOutput)
-
+// ensure that the encoding is set to UTF-8, no matter what the system default is
+// this fixes some edge cases with special characters not displaying correctly
+// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
+tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
     it.options.release = 17
-
-    doFirst {
-        def args = options.compilerArgs
-        args.removeAll { it.startsWith("-AoutRefMapFile=") }
-        args.add("-AoutRefMapFile=${refmapOutput.get().asFile}")
-    }
 }
 
-javadoc {
-    options.tags = ["reason"]
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    archiveClassifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
+// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+// if it is present.
+// If you remove this task, sources will not be generated.
 task sourcesJar(type: Jar, dependsOn: classes) {
     archiveClassifier = "sources"
     from sourceSets.main.allSource
 }
 
 java {
+    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+    // if it is present.
+    // If you remove this line, sources will not be generated.
     withSourcesJar()
 }
 
 jar {
-    dependsOn(tasks.named("syncGeneratedResources"))
-    doFirst {
-        def refmapFile = layout.buildDirectory.file("resources/main/${refmapName}").get().asFile
-        if (!refmapFile.exists()) {
-            throw new GradleException("Missing mixin refmap: ${refmapFile}")
-        }
-    }
-    manifest {
-        attributes(
-                "MixinConfigs": String.join(",",
-                        "betternether.mixins.common.json",
-                        "betternether.mixins.client.json"
-                )
-        )
-    }
-    from(generatedResourcesDir)
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from "LICENSE"
     from "LICENSE.ASSETS"
 }
 
-configurations {
-    dev {
-        canBeResolved = false
-        canBeConsumed = true
-    }
-}
-
-artifacts {
-    dev jar
-}
-
+// configure the maven publication
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact(jar)
-            artifact(sourcesJar)
+            // add all the jars that should be included when publishing to maven
+            artifact(remapJar) {
+                builtBy remapJar
+            }
+            artifact(sourcesJar) {
+                builtBy remapSourcesJar
+            }
         }
+    }
+
+    // select the repositories you want to publish to
+    repositories {
+        // uncomment to publish to the local maven
+        // mavenLocal()
     }
 }
 
@@ -353,83 +222,84 @@ task changelog() {
     }
 }
 
-if (enablePublishing) {
-    modrinth {
-        def changes = new File(projectDir, "CHANGES.md")
-        if (changes.exists()) {
-            changes = changes.getText('UTF-8')
-        } else {
-            changes = ""
-        }
-        def modrinth_token = new File(projectDir, "../MODRINTH_TOKEN")
-        if (modrinth_token.exists()) {
-            modrinth_token = modrinth_token.text
-        } else {
-            modrinth_token = ""
-        }
-        def slurper = new groovy.json.JsonSlurper()
-        token = modrinth_token
-        projectId = project.modrinth_id
-        versionNumber = project.mod_version
-        versionType = project.release_channel
-        uploadFile = jar
-        gameVersions = slurper.parseText(project.modrinth_versions)
-        loaders = ["forge"]
-        changelog = changes
-        dependencies {
-            required.project "bclib-forge"
-            optional.project "emi"
-            optional.project "wthit"
-        }
-        debugMode = false
+modrinth {
+    def changes = new File(projectDir, "CHANGES.md")
+    if (changes.exists()) {
+        changes = changes.getText('UTF-8')
+    } else {
+        changes = ""
+    }
+    def modrinth_token = new File(projectDir, "../MODRINTH_TOKEN")
+    if (modrinth_token.exists()) {
+        modrinth_token = modrinth_token.text
+    } else {
+        modrinth_token = ""
+    }
+    def slurper = new groovy.json.JsonSlurper()
+    token = modrinth_token
+    projectId = project.modrinth_id
+    versionNumber = project.mod_version
+    versionType = project.release_channel
+    uploadFile = remapJar
+    gameVersions = slurper.parseText(project.modrinth_versions)
+    loaders = ["fabric"]
+    changelog = changes
+    dependencies {
+        required.project "fabric-api"
+        required.project "bclib-forge"
+        optional.project "emi"
+        optional.project "wthit"
+    }
+    debugMode = false
+}
+
+curseforge {
+    def slurper = new groovy.json.JsonSlurper()
+    apiKey = new File(projectDir, "../CURSEFORGE_TOKEN")
+    if (apiKey.exists()) {
+        apiKey = apiKey.text
+    } else {
+        apiKey = ""
     }
 
-    curseforge {
-        def slurper = new groovy.json.JsonSlurper()
-        apiKey = new File(projectDir, "../CURSEFORGE_TOKEN")
-        if (apiKey.exists()) {
-            apiKey = apiKey.text
-        } else {
-            apiKey = ""
-        }
+    def changes = new File(projectDir, "CHANGES.md")
+    if (changes.exists()) {
+        changes = changes.getText('UTF-8')
+    } else {
+        changes = ""
+    }
 
-        def changes = new File(projectDir, "CHANGES.md")
-        if (changes.exists()) {
-            changes = changes.getText('UTF-8')
-        } else {
-            changes = ""
+    project {
+        id = project.curseforge_project_id
+        changelogType = 'markdown'
+        changelog = changes
+        releaseType = project.release_channel
+        def versions = slurper.parseText(project.modrinth_versions);
+        def latestVersion = ''
+        for (v in versions) {
+            addGameVersion v
+            latestVersion = "[$v]"
         }
+        addGameVersion 'Fabric'
+        addGameVersion 'Java 17'
+        relations {
+            requiredDependency 'fabric-api'
+            requiredDependency 'bclib-forge'
+            optionalDependency 'emi'
+            optionalDependency 'roughly-enough-items'
+            optionalDependency 'wthit'
+        }
+        mainArtifact(remapJar) {
+            displayName = "$project.modrinth_id-$project.version $latestVersion"
+        }
+        afterEvaluate {
+            mainArtifact(remapJar.outputs)
+        }
+    }
 
-        project {
-            id = project.curseforge_project_id
-            changelogType = 'markdown'
-            changelog = changes
-            releaseType = project.release_channel
-            def versions = slurper.parseText(project.modrinth_versions);
-            def latestVersion = ''
-            for (v in versions) {
-                addGameVersion v
-                latestVersion = "[$v]"
-            }
-            addGameVersion 'Forge'
-            addGameVersion 'Java 17'
-            relations {
-                requiredDependency 'bclib-forge'
-                optionalDependency 'emi'
-                optionalDependency 'wthit'
-            }
-            mainArtifact(jar) {
-                displayName = "$project.modrinth_id-$project.version $latestVersion"
-            }
-            afterEvaluate {
-                mainArtifact(jar.outputs)
-            }
-        }
-
-        options {
-            debug = false
-            forgeGradleIntegration = false
-        }
+    options {
+        debug = false
+        forgeGradleIntegration = false
     }
 }
 
@@ -466,51 +336,29 @@ task nextVersion() {
     }
 }
 
-def distDir = new File(rootProject.projectDir.parentFile, "betterx-dist 1.20.1")
-def modrinthModsDir = new File("C:/Users/Redmi/AppData/Roaming/ModrinthApp/profiles/Forge 1.20.1 (1)/mods")
-def betterNetherReobfJar = layout.buildDirectory.file("reobfJar/output.jar")
-def bclibReobfJar = project(":BCLib").layout.buildDirectory.file("reobfJar/output.jar")
-def wunderlibReobfJar = project(":WunderLib").layout.buildDirectory.file("reobfJar/output.jar")
-tasks.register("copyDistJars", Copy) {
-    dependsOn(tasks.named("reobfJar"))
-    from(betterNetherReobfJar) {
-        rename { tasks.named("jar").get().archiveFileName.get() }
-    }
-    if (local_bclib) {
-        dependsOn(project(":BCLib").tasks.named("reobfJar"))
-        from(bclibReobfJar) {
-            rename { project(":BCLib").tasks.named("jar").get().archiveFileName.get() }
-        }
-    }
-    if (local_wunderlib) {
-        dependsOn(project(":WunderLib").tasks.named("reobfJar"))
-        from(wunderlibReobfJar) {
-            rename { project(":WunderLib").tasks.named("jar").get().archiveFileName.get() }
-        }
-    }
-    into(distDir)
-}
+def modrinthModsDir = file(findProperty("modrinth_mods_dir") ?: "C:/Users/Redmi/AppData/Roaming/ModrinthApp/profiles/Fabric 1.20.1/mods")
+def fabricRuntimeProjects = [project]
+if (local_bclib) fabricRuntimeProjects.add(project(":BCLib"))
+if (local_wunderlib) fabricRuntimeProjects.add(project(":WunderLib"))
+def managedModJarPatterns = ["better-nether-*.jar", "bclib-*.jar", "wunderlib-*.jar"]
 
 tasks.register("copyModrinthJars", Copy) {
-    dependsOn(tasks.named("reobfJar"))
-    from(betterNetherReobfJar) {
-        rename { tasks.named("jar").get().archiveFileName.get() }
+    dependsOn {
+        fabricRuntimeProjects.collect { it.tasks.named("remapJar") }
     }
-    if (local_bclib) {
-        dependsOn(project(":BCLib").tasks.named("reobfJar"))
-        from(bclibReobfJar) {
-            rename { project(":BCLib").tasks.named("jar").get().archiveFileName.get() }
-        }
+    onlyIf { modrinthModsDir.parentFile.exists() }
+    from {
+        fabricRuntimeProjects.collect { it.tasks.named("remapJar").flatMap { task -> task.archiveFile } }
     }
-    if (local_wunderlib) {
-        dependsOn(project(":WunderLib").tasks.named("reobfJar"))
-        from(wunderlibReobfJar) {
-            rename { project(":WunderLib").tasks.named("jar").get().archiveFileName.get() }
-        }
+    rename { fileName -> fileName.endsWith(".jar") ? "${fileName[0..-5]}-fabric.jar" : fileName }
+    doFirst {
+        delete(fileTree(modrinthModsDir) {
+            managedModJarPatterns.each { include(it) }
+        })
     }
     into(modrinthModsDir)
 }
 
 tasks.named("build") {
-    finalizedBy("copyDistJars", "copyModrinthJars")
+    finalizedBy("copyModrinthJars")
 }

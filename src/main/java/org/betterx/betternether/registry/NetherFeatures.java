@@ -37,8 +37,6 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import com.google.common.collect.Lists;
 
 import java.util.List;
-import net.minecraftforge.registries.RegisterEvent;
-
 public class NetherFeatures {
     public static Feature<NoneFeatureConfiguration> JELLYFISH_MUSHROOM;
     public static Feature<NoneFeatureConfiguration> OBSIDIAN_CRYSTAL;
@@ -150,13 +148,6 @@ public class NetherFeatures {
         for (BCLFeature f : defaultFeatures) {
             builder.feature(f);
         }
-    }
-
-    public static void onRegister(RegisterEvent event) {
-        if (!event.getRegistryKey().equals(Registries.FEATURE)) {
-            return;
-        }
-        register();
     }
 
     public static BCLBiomeBuilder addDefaultOres(BCLBiomeBuilder builder) {

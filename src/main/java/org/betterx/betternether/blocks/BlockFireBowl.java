@@ -29,9 +29,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public abstract class BlockFireBowl extends BlockBaseNotFull {
     private static final VoxelShape SHAPE = box(0, 0, 0, 16, 12, 16);
@@ -46,7 +46,7 @@ public abstract class BlockFireBowl extends BlockBaseNotFull {
     public static final BooleanProperty FIRE = BNBlockProperties.FIRE;
 
     protected BlockFireBowl(Block source) {
-        super(BlockBehaviour.Properties.copy(source).noOcclusion().lightLevel(BlockFireBowl::getLuminance));
+        super(FabricBlockSettings.copyOf(source).noOcclusion().lightLevel(BlockFireBowl::getLuminance));
         this.registerDefaultState(getStateDefinition().any().setValue(FIRE, false));
         this.setRenderLayer(BNRenderLayer.CUTOUT);
     }
@@ -116,7 +116,7 @@ public abstract class BlockFireBowl extends BlockBaseNotFull {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (state.getValue(FIRE)) {
             if (random.nextInt(24) == 0)

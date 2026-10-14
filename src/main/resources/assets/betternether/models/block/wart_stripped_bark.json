@@ -1,1 +1,6 @@
-﻿{"textures":{"end":"betternether:block/wart_stripped_log_side","side":"betternether:block/wart_stripped_log_side"},"parent":"minecraft:block/cube_column"}
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "betternether:block/wart_stripped_log_side"
+    }
+}

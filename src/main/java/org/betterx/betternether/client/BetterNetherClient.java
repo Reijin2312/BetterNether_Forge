@@ -1,64 +1,44 @@
 package org.betterx.betternether.client;
 
+import org.betterx.bclib.integration.modmenu.ModMenu;
 import org.betterx.betternether.BetterNether;
 import org.betterx.betternether.blocks.BNRenderLayer;
 import org.betterx.betternether.config.screen.ConfigScreen;
+import org.betterx.betternether.registry.EntityRenderRegistry;
 import org.betterx.betternether.registry.NetherParticles;
 import org.betterx.betternether.registry.NetherBlocks;
 
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.BuiltInRegistries;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.ConfigScreenHandler;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 
-@OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = BetterNether.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class BetterNetherClient {
-    private BetterNetherClient() {
+public class BetterNetherClient implements ClientModInitializer {
+    @Override
+    public void onInitializeClient() {
+        ClientOptions.init();
+        registerRenderLayers();
+        EntityRenderRegistry.register();
+
+        NetherParticles.register();
+        ModMenu.addModMenuScreen(BetterNether.MOD_ID, ConfigScreen::new);
     }
 
-    @SubscribeEvent
-    public static void onClientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-            ClientOptions.init();
-            registerRenderLayers();
-            ModLoadingContext.get()
-                             .registerExtensionPoint(
-                                     ConfigScreenHandler.ConfigScreenFactory.class,
-                                     () -> new ConfigScreenHandler.ConfigScreenFactory(
-                                             (client, parent) -> new ConfigScreen(parent)
-                                     )
-                             );
-        });
-    }
-
-    @SubscribeEvent
-    public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
-        NetherParticles.registerProviders(event);
-    }
-
-    private static void registerRenderLayers() {
+    private void registerRenderLayers() {
         RenderType cutout = RenderType.cutout();
         RenderType translucent = RenderType.translucent();
         BuiltInRegistries.BLOCK.forEach(block -> {
             if (block instanceof IRenderTypeable) {
                 BNRenderLayer layer = ((IRenderTypeable) block).getRenderLayer();
                 if (layer == BNRenderLayer.CUTOUT)
-                    ItemBlockRenderTypes.setRenderLayer(block, cutout);
+                    BlockRenderLayerMap.INSTANCE.putBlock(block, cutout);
                 else if (layer == BNRenderLayer.TRANSLUCENT)
-                    ItemBlockRenderTypes.setRenderLayer(block, translucent);
+                    BlockRenderLayerMap.INSTANCE.putBlock(block, translucent);
             }
         });
-        ItemBlockRenderTypes.setRenderLayer(NetherBlocks.GLOOMSCULK_GEODE, translucent);
-        ItemBlockRenderTypes.setRenderLayer(NetherBlocks.GLOOMSCULK_LAMP, translucent);
-        ItemBlockRenderTypes.setRenderLayer(NetherBlocks.MAT_GLOOMWOOD.getSapling(), cutout);
+        BlockRenderLayerMap.INSTANCE.putBlock(NetherBlocks.GLOOMSCULK_GEODE, translucent);
+        BlockRenderLayerMap.INSTANCE.putBlock(NetherBlocks.GLOOMSCULK_LAMP, translucent);
+        BlockRenderLayerMap.INSTANCE.putBlock(NetherBlocks.MAT_GLOOMWOOD.getSapling(), cutout);
     }
 }

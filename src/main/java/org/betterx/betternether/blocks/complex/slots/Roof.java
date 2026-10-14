@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,7 +26,7 @@ public class Roof extends SimpleMaterialSlot<WoodenComplexMaterial> {
     protected @NotNull Block createBlock(
             WoodenComplexMaterial parentMaterial, BlockBehaviour.Properties settings
     ) {
-        return new BaseBlock.Wood(BlockBehaviour.Properties.copy(parentMaterial.getBlock(
+        return new BaseBlock.Wood(FabricBlockSettings.copyOf(parentMaterial.getBlock(
                 WoodSlots.PLANKS)));
     }
 

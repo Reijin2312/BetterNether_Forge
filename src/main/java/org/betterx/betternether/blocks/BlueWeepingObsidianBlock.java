@@ -9,11 +9,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class BlueWeepingObsidianBlock extends BNObsidianBase {
     public BlueWeepingObsidianBlock() {
-        super(BlockBehaviour.Properties.copy(Blocks.CRYING_OBSIDIAN).lightLevel(state -> 14), null);
+        super(FabricBlockSettings.copyOf(Blocks.CRYING_OBSIDIAN).luminance(14), null);
     }
 
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource random) {

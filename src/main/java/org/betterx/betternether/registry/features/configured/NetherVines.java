@@ -108,7 +108,14 @@ public class NetherVines {
             .spreadXZ(5)
             .build();
 
-    public static BCLConfigureFeature<RandomPatchFeature, RandomPatchConfiguration> PATCH_TWISTING_VINES;
+    public static final BCLConfigureFeature<RandomPatchFeature, RandomPatchConfiguration> PATCH_TWISTING_VINES = BCLFeatureBuilder
+            .start(BN.id("temp_patch_twisting_vine"), NetherFeatures.TWISTING_VINES)
+            .inlinePlace()
+            .isEmptyAndOnNetherGround()
+            .inRandomPatch(BN.id("patch_twisting_vine"))
+            .tries(10)
+            .spreadXZ(5)
+            .build();
 
     public static final BCLConfigureFeature<RandomPatchFeature, RandomPatchConfiguration> PATCH_BLOOMING_VINE = BCLFeatureBuilder
             .startPillar(BN.id("temp_patch_blooming_vine"), PillarFeatureConfig.KnownTransformers.BOTTOM_GROW)
@@ -191,30 +198,6 @@ public class NetherVines {
             .spreadXZ(3)
             .build();
 
-    private static void initTwistingVines() {
-        if (PATCH_TWISTING_VINES != null) {
-            return;
-        }
-        if (NetherFeatures.TWISTING_VINES == null) {
-            throw new IllegalStateException("NetherFeatures.register() must run before PATCH_TWISTING_VINES");
-        }
-        // Lazily build to avoid early class init before custom features are registered.
-        PATCH_TWISTING_VINES = BCLFeatureBuilder
-                .start(BN.id("temp_patch_twisting_vine"), NetherFeatures.TWISTING_VINES)
-                .inlinePlace()
-                .isEmptyAndOnNetherGround()
-                .inRandomPatch(BN.id("patch_twisting_vine"))
-                .tries(10)
-                .spreadXZ(5)
-                .build();
-    }
-
-    public static BCLConfigureFeature<RandomPatchFeature, RandomPatchConfiguration> patchTwistingVines() {
-        initTwistingVines();
-        return PATCH_TWISTING_VINES;
-    }
-
     public static void ensureStaticInitialization() {
-        initTwistingVines();
     }
 }

@@ -27,7 +27,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -47,7 +47,7 @@ public class BlockChestOfDrawers extends BaseEntityBlock implements BehaviourMet
     public static final BooleanProperty OPEN = BNBlockProperties.OPEN;
 
     public BlockChestOfDrawers() {
-        super(BlockBehaviour.Properties.copy(NetherBlocks.CINCINNASITE_BLOCK).noOcclusion());
+        super(FabricBlockSettings.copy(NetherBlocks.CINCINNASITE_BLOCK).noOcclusion());
         this.registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(OPEN, false));
     }
 

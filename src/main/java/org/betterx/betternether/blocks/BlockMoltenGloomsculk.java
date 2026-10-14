@@ -6,8 +6,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * Molten gloomsculk: {@link BlockTerrain} that throws cinders off its fissures.
@@ -26,7 +24,6 @@ public class BlockMoltenGloomsculk extends BlockTerrain {
         super(settings);
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         // Only vent where the rock is open to the air. Molten gloomsculk is a terrain block and comes in

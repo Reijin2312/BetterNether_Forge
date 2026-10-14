@@ -14,10 +14,9 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.commands.LocateCommand;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.levelgen.structure.Structure;
-
-import org.betterx.betternether.mixin.common.LocateCommandInvoker;
 
 public class PlaceCommand {
     private static final DynamicCommandExceptionType ERROR_STRUCTURE_INVALID = new DynamicCommandExceptionType((object) -> {
@@ -59,7 +58,7 @@ public class PlaceCommand {
         Registry<Structure> registry = stack.getLevel()
                                             .registryAccess()
                                             .registryOrThrow(Registries.STRUCTURE);
-        HolderSet<Structure> holderSet = LocateCommandInvoker.callGetHolders(result, registry)
+        HolderSet<Structure> holderSet = LocateCommand.getHolders(result, registry)
                                                       .orElseThrow(() -> ERROR_STRUCTURE_INVALID.create(result.asPrintable()));
 
         BlockPos blockPos = new BlockPos(

@@ -4,10 +4,8 @@ import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiome;
 import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeBuilder;
 import org.betterx.bclib.api.v2.levelgen.biomes.BCLBiomeRegistry;
 import org.betterx.bclib.api.v2.levelgen.biomes.BiomeAPI;
-import org.betterx.bclib.api.v2.levelgen.surface.rules.Conditions;
 import org.betterx.bclib.api.v3.datagen.TagDataProvider;
 import org.betterx.betternether.BetterNether;
-import org.betterx.betternether.registry.NetherBiomes;
 import org.betterx.betternether.world.NetherBiome;
 import org.betterx.betternether.world.NetherBiomeBuilder;
 import org.betterx.betternether.world.NetherBiomeConfig;
@@ -16,11 +14,11 @@ import org.betterx.datagen.betternether.NetherRegistrySupplier;
 import org.betterx.worlds.together.tag.v3.TagManager;
 
 import net.minecraft.core.HolderLookup;
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.world.level.biome.Biome;
 
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 
 import java.util.HashSet;
 import java.util.List;
@@ -31,17 +29,18 @@ public class NetherBiomesDataProvider extends TagDataProvider<Biome> {
     private static Set<BCLBiome> BIOMES = new HashSet<>();
 
     /**
-     * Constructs a new {@link TagDataProvider} with the default computed path.
+     * Constructs a new {@link FabricTagProvider} with the default computed path.
      *
-     * @param output           the {@link PackOutput} instance
+     * <p>Common implementations of this class are provided.
+     *
+     * @param output           the {@link FabricDataOutput} instance
      * @param registriesFuture the backing registry for the tag type
      */
     public NetherBiomesDataProvider(
-            PackOutput output,
-            CompletableFuture<HolderLookup.Provider> registriesFuture,
-            ExistingFileHelper existingFileHelper
+            FabricDataOutput output,
+            CompletableFuture<HolderLookup.Provider> registriesFuture
     ) {
-        super(TagManager.BIOMES, List.of(BetterNether.MOD_ID), output, registriesFuture, existingFileHelper);
+        super(TagManager.BIOMES, List.of(BetterNether.MOD_ID), output, registriesFuture);
     }
 
     private static class Config {
@@ -150,22 +149,18 @@ public class NetherBiomesDataProvider extends TagDataProvider<Biome> {
     public static void bootstrap(BootstapContext<Biome> ctx) {
         BCLBiomeBuilder.registerUnbound(ctx);
         NetherRegistrySupplier.INSTANCE.MAIN_LOCK.release();
-        BetterNether.LOGGER.info("[datagen] Registered Biomes (vanilla registry): {}", BCLBiomeRegistry.BUILTIN_BCL_BIOMES.size());
+        BetterNether.LOGGER.info("Registered Biomes");
     }
 
     public static void bootstrapBCL(BootstapContext<BCLBiome> ctx) {
-        BetterNether.LOGGER.info("[datagen] bootstrapBCL: {} biomes to register", BIOMES.size());
         for (var biome : BIOMES) {
             ctx.register(biome.getBCLBiomeKey(), biome);
-            BetterNether.LOGGER.info("[datagen]   BCLBiome {}", biome.getBCLBiomeKey().location());
+
         }
         BetterNether.LOGGER.info("Registered BCLBiomes: " + BCLBiomeRegistry.BUILTIN_BCL_BIOMES.size());
     }
 
     public static void ensureStaticallyLoaded() {
-        NetherBiomes.register();
-        BCLBiomeRegistry.register();
-        Conditions.registerAll();
     }
 
     static {

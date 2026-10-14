@@ -10,7 +10,6 @@ import org.betterx.bclib.furniture.block.BaseBarStool;
 import org.betterx.bclib.furniture.block.BaseChair;
 import org.betterx.bclib.furniture.block.BaseTaburet;
 import org.betterx.bclib.registry.BlockRegistry;
-import org.betterx.bclib.registry.FuelRegistry;
 import org.betterx.betternether.BetterNether;
 import org.betterx.betternether.blocks.*;
 import org.betterx.betternether.blocks.complex.*;
@@ -36,7 +35,8 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
@@ -59,23 +59,23 @@ public class NetherBlocks extends BlockRegistry {
     // Gloomwood //
     public static final GloomwoodMaterial MAT_GLOOMWOOD = new GloomwoodMaterial().init();
     public static final GloomwoodDarkMaterial MAT_GLOOMWOOD_DARK = new GloomwoodDarkMaterial().init();
-    public static final Block GLOOMWOOD_TRANSITION_STRIPPED_LOG = registerBlock("gloomwood_transition_stripped_log", new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_STEM)));
-    public static final Block GLOOMWOOD_TRANSITION_LOG = registerBlock("gloomwood_transition_log", new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_STEM)));
-    public static final Block GLOOMWOOD_TRANSITION_PLANKS = registerBlock("gloomwood_transition_planks", new Block(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS)));
-    public static final Block GLOOMWOOD_DARK_MOLTEN_LOG = registerBlock("gloomwood_dark_molten_log", new BlockMoltenGloomwoodLog(BlockBehaviour.Properties.copy(Blocks.WARPED_STEM).lightLevel(state -> 7)));
+    public static final Block GLOOMWOOD_TRANSITION_STRIPPED_LOG = registerBlock("gloomwood_transition_stripped_log", new RotatedPillarBlock(FabricBlockSettings.copyOf(Blocks.WARPED_STEM)));
+    public static final Block GLOOMWOOD_TRANSITION_LOG = registerBlock("gloomwood_transition_log", new RotatedPillarBlock(FabricBlockSettings.copyOf(Blocks.WARPED_STEM)));
+    public static final Block GLOOMWOOD_TRANSITION_PLANKS = registerBlock("gloomwood_transition_planks", new Block(FabricBlockSettings.copyOf(Blocks.WARPED_PLANKS)));
+    public static final Block GLOOMWOOD_DARK_MOLTEN_LOG = registerBlock("gloomwood_dark_molten_log", new BlockMoltenGloomwoodLog(FabricBlockSettings.copyOf(Blocks.WARPED_STEM).luminance(state -> 7)));
     public static final Block GLOOMWOOD_LEAVES = registerBlock("gloomwood_leaves", new BNLeaves(MAT_GLOOMWOOD.getSapling(), MapColor.COLOR_LIGHT_GRAY));
     public static final Block GLOOMWOOD_BLEACHED_LEAVES = registerBlock("gloomwood_bleached_leaves", new BNLeaves(MAT_GLOOMWOOD.getSapling(), MapColor.TERRACOTTA_WHITE));
-    public static final Block BLEACHED_GLOOMSCULK = registerBlock("bleached_gloomsculk", new BlockTerrain(BlockBehaviour.Properties.copy(Blocks.SCULK)));
-    public static final Block MOLTEN_GLOOMSCULK = registerBlock("molten_gloomsculk", new BlockMoltenGloomsculk(BlockBehaviour.Properties.copy(Blocks.SCULK).lightLevel(state -> 5)));
-    public static final Block VEINED_GLOOMSCULK = registerBlock("veined_gloomsculk", new BlockTerrain(BlockBehaviour.Properties.copy(Blocks.NETHERRACK)));
-    public static final Block GLOOMSCULK_GEODE = registerBlock("gloomsculk_geode", new BlockGloomsculkGeode(BlockBehaviour.Properties.copy(Blocks.SCULK).lightLevel(state -> 10).noOcclusion()));
-    public static final Block GLOOMSCULK_GEODE_CRYSTAL = registerBlock("gloomsculk_geode_crystal", new BlockGloomsculkCrystal(BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).lightLevel(state -> 8).noOcclusion()));
-    public static final Block GLOOMSCULK_LAMP = registerBlock("gloomsculk_lamp", new Block(BlockBehaviour.Properties.copy(Blocks.SCULK).lightLevel(state -> 15).noOcclusion()));
-    public static final Block GLOOMSCULK_CRYSTAL = registerBlock("gloomsculk_crystal", new BlockGloomsculkCrystal(BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).lightLevel(state -> 6).noOcclusion()));
+    public static final Block BLEACHED_GLOOMSCULK = registerBlock("bleached_gloomsculk", new BlockTerrain(FabricBlockSettings.copyOf(Blocks.SCULK)));
+    public static final Block MOLTEN_GLOOMSCULK = registerBlock("molten_gloomsculk", new BlockMoltenGloomsculk(FabricBlockSettings.copyOf(Blocks.SCULK).luminance(state -> 5)));
+    public static final Block VEINED_GLOOMSCULK = registerBlock("veined_gloomsculk", new BlockTerrain(FabricBlockSettings.copyOf(Blocks.NETHERRACK)));
+    public static final Block GLOOMSCULK_GEODE = registerBlock("gloomsculk_geode", new BlockGloomsculkGeode(FabricBlockSettings.copyOf(Blocks.SCULK).luminance(state -> 10).nonOpaque()));
+    public static final Block GLOOMSCULK_GEODE_CRYSTAL = registerBlock("gloomsculk_geode_crystal", new BlockGloomsculkCrystal(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).luminance(state -> 8).nonOpaque()));
+    public static final Block GLOOMSCULK_LAMP = registerBlock("gloomsculk_lamp", new Block(FabricBlockSettings.copyOf(Blocks.SCULK).luminance(state -> 15).nonOpaque()));
+    public static final Block GLOOMSCULK_CRYSTAL = registerBlock("gloomsculk_crystal", new BlockGloomsculkCrystal(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).luminance(state -> 6).nonOpaque()));
     public static final Block PALE_GLOOMGRASS = registerBlock("pale_gloomgrass", new BlockNetherGrass());
     public static final Block GLOOMGRASS = registerBlock("gloomgrass", new BlockNetherGrass());
     public static final Block GLOOMSCULK_VINE = registerBlock("gloomsculk_vine", new BlockBlackVine());
-    public static final Block GLOOMWISP_VINE = registerBlock("gloomwisp_vine", new BlockGloomwispVine(BlockBehaviour.Properties.copy(Blocks.WARPED_ROOTS).lightLevel(state -> 5).randomTicks()));
+    public static final Block GLOOMWISP_VINE = registerBlock("gloomwisp_vine", new BlockGloomwispVine(FabricBlockSettings.copyOf(Blocks.WARPED_ROOTS).luminance(state -> 5).ticksRandomly()));
     private static final boolean GLOOMSCULK_FUELS_REGISTERED = registerGloomsculkFuels();
 
     private static boolean registerGloomsculkFuels() {
@@ -414,7 +414,7 @@ public class NetherBlocks extends BlockRegistry {
     // Basalt Bricks //
     public static final Block BASALT_BRICKS = registerMakeable2X2(
             "basalt_bricks",
-            new BlockBase.Stone(BlockBehaviour.Properties.copy(Blocks.BASALT)),
+            new BlockBase.Stone(FabricBlockSettings.copyOf(Blocks.BASALT)),
             "basalt_bricks",
             RecipeCategory.BUILDING_BLOCKS,
             Blocks.POLISHED_BASALT
@@ -762,16 +762,21 @@ public class NetherBlocks extends BlockRegistry {
 
     @SafeVarargs
     public static <T extends Block> T registerBlock(String name, T block, TagKey<Block>... tags) {
-        registerBlockDirectly(name, block);
-        if (tags.length > 0) {
-            TagManager.BLOCKS.add(block, tags);
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            registerBlockDirectly(name, block);
+            if (tags.length > 0) {
+                TagManager.BLOCKS.add(block, tags);
+            }
         }
         return block;
     }
 
     @SafeVarargs
     private static <B extends Block> B registerBlockNI(String name, B block, TagKey<Block>... tags) {
-        return registerBlock(name, block, false, tags);
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            return registerBlock(name, block, false, tags);
+        }
+        return block;
     }
 
 
@@ -802,49 +807,59 @@ public class NetherBlocks extends BlockRegistry {
 
     public static Block registerStairs(String name, Block source, boolean fireproof, TagKey<Block>... tags) {
         Block stairs = BaseStairsBlock.from(source, fireproof);
-        registerBlockDirectly(name, stairs);
-        if (stairs.defaultBlockState().ignitedByLava())
-            addFuel(source, stairs);
-        RecipesHelper.makeStairsRecipe(source, stairs);
-        if (tags.length > 0) {
-            TagManager.BLOCKS.add(stairs, tags);
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            registerBlockDirectly(name, stairs);
+            if (stairs.defaultBlockState().ignitedByLava())
+                addFuel(source, stairs);
+            RecipesHelper.makeStairsRecipe(source, stairs);
+            if (tags.length > 0) {
+                TagManager.BLOCKS.add(stairs, tags);
+            }
         }
         return stairs;
     }
 
     public static Block registerSlab(String name, Block source, boolean fireproof, TagKey<Block>... tags) {
         Block slab = BaseSlabBlock.from(source, fireproof);
-        registerBlockDirectly(name, slab);
-        if (slab.defaultBlockState().ignitedByLava())
-            addFuel(source, slab);
-        RecipesHelper.makeSlabRecipe(source, slab);
-        if (tags.length > 0) {
-            TagManager.BLOCKS.add(slab, tags);
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            registerBlockDirectly(name, slab);
+            if (slab.defaultBlockState().ignitedByLava())
+                addFuel(source, slab);
+            RecipesHelper.makeSlabRecipe(source, slab);
+            if (tags.length > 0) {
+                TagManager.BLOCKS.add(slab, tags);
+            }
         }
         return slab;
     }
 
     private static Block registerRoof(String name, Block source) {
         Block roof = BlockBase.from(source);
-        registerBlockDirectly(name, roof);
-        addFuel(source, roof);
-        RecipesHelper.makeRoofRecipe(source, roof);
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            registerBlockDirectly(name, roof);
+            addFuel(source, roof);
+            RecipesHelper.makeRoofRecipe(source, roof);
+        }
         return roof;
     }
 
     public static Block registerButton(String name, Block source, BlockSetType type) {
         Block button = BaseButtonBlock.from(source, type);
-        registerBlockDirectly(name, button);
-        addFuel(source, button);
-        RecipesHelper.makeButtonRecipe(source, button);
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            registerBlockDirectly(name, button);
+            addFuel(source, button);
+            RecipesHelper.makeButtonRecipe(source, button);
+        }
         return button;
     }
 
     public static Block registerPlate(String name, Block source, BlockSetType type) {
         Block plate = BasePressurePlateBlock.from(source, type);
-        registerBlockDirectly(name, plate);
-        addFuel(source, plate);
-        RecipesHelper.makePlateRecipe(source, plate);
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            registerBlockDirectly(name, plate);
+            addFuel(source, plate);
+            RecipesHelper.makePlateRecipe(source, plate);
+        }
         return plate;
     }
 
@@ -881,77 +896,91 @@ public class NetherBlocks extends BlockRegistry {
             RecipeCategory category,
             Block... sources
     ) {
-        registerBlockDirectly(name, result);
-        for (Block source : sources) {
-            RecipesHelper.makeSimpleRecipe2(source, result, 4, group, category);
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            registerBlockDirectly(name, result);
+            for (Block source : sources) {
+                RecipesHelper.makeSimpleRecipe2(source, result, 4, group, category);
+            }
         }
         return result;
     }
 
     public static Block registerWall(String name, Block source) {
         Block wall = BNWall.from(source);
-        registerBlockDirectly(name, wall);
-        TagManager.BLOCKS.add(wall, BlockTags.WALLS);
-        RecipesHelper.makeWallRecipe(source, wall);
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            registerBlockDirectly(name, wall);
+            TagManager.BLOCKS.add(wall, BlockTags.WALLS);
+            RecipesHelper.makeWallRecipe(source, wall);
+        }
         return wall;
     }
 
 
     public static Block registerTaburet(String name, Block source) {
         Block block = BaseTaburet.from(source);
-        registerBlockDirectly(name, block);
-        addFuel(source, block);
-        RecipesHelper.addProvider(t -> Taburet.makeTaburetRecipe(
-                new ResourceLocation(BetterNether.MOD_ID, name),
-                block,
-                source
-        ));
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            registerBlockDirectly(name, block);
+            addFuel(source, block);
+            Taburet.makeTaburetRecipe(
+                    new ResourceLocation(BetterNether.MOD_ID, name),
+                    block,
+                    source
+            );
 
-        TagManager.BLOCKS.add(block, BlockTags.MINEABLE_WITH_PICKAXE);
+            TagManager.BLOCKS.add(block, BlockTags.MINEABLE_WITH_PICKAXE);
+        }
 
         return block;
     }
 
     public static Block registerChair(String name, Block source) {
         Block block = BaseChair.from(source);
-        registerBlockDirectly(name, block);
-        addFuel(source, block);
-        RecipesHelper.addProvider(t -> Chair.makeChairRecipe(
-                new ResourceLocation(BetterNether.MOD_ID, name),
-                block,
-                source
-        ));
-        TagManager.BLOCKS.add(block, BlockTags.MINEABLE_WITH_PICKAXE);
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            registerBlockDirectly(name, block);
+            addFuel(source, block);
+            Chair.makeChairRecipe(
+                    new ResourceLocation(BetterNether.MOD_ID, name),
+                    block,
+                    source
+            );
+            TagManager.BLOCKS.add(block, BlockTags.MINEABLE_WITH_PICKAXE);
+        }
 
         return block;
     }
 
     public static Block registerBarStool(String name, Block source) {
         Block block = BaseBarStool.from(source);
-        registerBlockDirectly(name, block);
-        addFuel(source, block);
-        RecipesHelper.addProvider(t -> BarStool.makeBarStoolRecipe(
-                new ResourceLocation(BetterNether.MOD_ID, name),
-                block,
-                source
-        ));
-        TagManager.BLOCKS.add(block, BlockTags.MINEABLE_WITH_PICKAXE);
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            registerBlockDirectly(name, block);
+            addFuel(source, block);
+            BarStool.makeBarStoolRecipe(
+                    new ResourceLocation(BetterNether.MOD_ID, name),
+                    block,
+                    source
+            );
+            TagManager.BLOCKS.add(block, BlockTags.MINEABLE_WITH_PICKAXE);
+        }
 
         return block;
     }
 
     public static Block registerFurnace(String name, Block source) {
         Block block = new BlockNetherFurnace(source);
-        registerBlockDirectly(name, block);
-        RecipesHelper.makeRoundRecipe(source, block, "nether_furnace", RecipeCategory.DECORATIONS);
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            registerBlockDirectly(name, block);
+            RecipesHelper.makeRoundRecipe(source, block, "nether_furnace", RecipeCategory.DECORATIONS);
+        }
 
         return block;
     }
 
     private static Block registerStalactite(String name, Block source) {
         Block block = new BlockStalactite(source);
-        registerBlockDirectly(name, block);
-        RecipesHelper.makeSimpleRecipe2(block, source, 1, "nether_stalactite", RecipeCategory.DECORATIONS);
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            registerBlockDirectly(name, block);
+            RecipesHelper.makeSimpleRecipe2(block, source, 1, "nether_stalactite", RecipeCategory.DECORATIONS);
+        }
 
         return block;
     }
@@ -959,9 +988,11 @@ public class NetherBlocks extends BlockRegistry {
     private static Block registerFireBowl(String name, Block source, Block inside, Item leg) {
         final boolean isNetherite = name.startsWith("netherite");
         Block block = isNetherite ? new BlockFireBowl.Metal(source) : BlockFireBowl.from(source);
-        registerBlockDirectly(name, block);
-        if (!isNetherite) {
-            RecipesHelper.makeFireBowlRecipe(source, inside, leg, block);
+        if (Configs.BLOCKS.getBoolean("blocks", name, true)) {
+            registerBlockDirectly(name, block);
+            if (!isNetherite) {
+                RecipesHelper.makeFireBowlRecipe(source, inside, leg, block);
+            }
         }
 
         return block;

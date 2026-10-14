@@ -1,7 +1,6 @@
 package org.betterx.betternether.recipes;
 
 import org.betterx.bclib.recipes.BCLRecipeBuilder;
-import org.betterx.bclib.api.v3.datagen.RecipeDataProvider;
 import org.betterx.betternether.BN;
 import org.betterx.betternether.integrations.VanillaExcavatorsIntegration;
 import org.betterx.betternether.integrations.VanillaHammersIntegration;
@@ -17,10 +16,6 @@ import net.minecraft.world.level.block.Block;
 
 public class IntegrationRecipes {
     public static void register() {
-        RecipeDataProvider.defer(IntegrationRecipes::registerRecipes);
-    }
-
-    private static void registerRecipes() {
         if (VanillaHammersIntegration.hasHammers()) {
             makeHammerRecipe(
                     NetherItems.CINCINNASITE_HAMMER,

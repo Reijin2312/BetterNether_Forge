@@ -20,11 +20,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+
 import java.util.List;
 
 public class NetherAdvancementDataProvider extends AdvancementDataProvider {
-    public NetherAdvancementDataProvider() {
-        super(List.of(BetterNether.MOD_ID));
+    public NetherAdvancementDataProvider(FabricDataOutput output) {
+        super(List.of(BetterNether.MOD_ID), output);
     }
 
     @Override

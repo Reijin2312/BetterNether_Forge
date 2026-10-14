@@ -5,10 +5,9 @@ import org.betterx.betternether.BetterNether;
 import org.betterx.worlds.together.tag.v3.TagManager;
 
 import net.minecraft.core.HolderLookup;
-import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
 
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -16,10 +15,9 @@ import java.util.concurrent.CompletableFuture;
 public class NetherItemTagDataProvider extends TagDataProvider<Item> {
 
     public NetherItemTagDataProvider(
-            PackOutput output,
-            CompletableFuture<HolderLookup.Provider> registriesFuture,
-            ExistingFileHelper existingFileHelper
+            FabricDataOutput output,
+            CompletableFuture<HolderLookup.Provider> registriesFuture
     ) {
-        super(TagManager.ITEMS, List.of(BetterNether.MOD_ID, "c"), output, registriesFuture, existingFileHelper);
+        super(TagManager.ITEMS, List.of(BetterNether.MOD_ID), output, registriesFuture);
     }
 }

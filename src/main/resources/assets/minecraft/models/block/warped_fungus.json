@@ -1,9 +1,9 @@
 {
 	"__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
 	"textures": {
-		"particle": "block/warped_fungus",
-		"texture": "block/warped_fungus",
-		"bottom": "block/warped_fungus_bottom"
+		"particle": "blocks/warped_fungus",
+		"texture": "blocks/warped_fungus",
+		"bottom": "blocks/warped_fungus_bottom"
 	},
 	"elements": [ 	 
 		{

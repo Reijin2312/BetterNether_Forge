@@ -13,8 +13,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class BlockEyeBase extends BlockBase implements AddMineableHoe {
     public BlockEyeBase(Properties settings) {
@@ -44,7 +44,7 @@ public class BlockEyeBase extends BlockBase implements AddMineableHoe {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
         return new ItemStack(NetherBlocks.EYE_SEED);
     }

@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "betternether:anchor_tree_slab",
     "betternether:basalt_bricks_slab",

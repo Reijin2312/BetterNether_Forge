@@ -6,9 +6,11 @@ import org.betterx.bclib.util.LootUtil;
 import org.betterx.betternether.blocks.materials.Materials;
 import org.betterx.betternether.interfaces.SurvivesOnGrassSoil;
 import org.betterx.betternether.interfaces.SurvivesOnNetherrackNyliumAndSculk;
+import org.betterx.worlds.together.tag.v3.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -23,8 +25,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import java.util.Collections;
 import java.util.List;
@@ -49,7 +51,7 @@ abstract class BaseBlockNetherGrass extends BasePlantBlock implements BehaviourP
         super(Materials.makeNetherGrass(MapColor.TERRACOTTA_GRAY).offsetType(Block.OffsetType.XZ));
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }

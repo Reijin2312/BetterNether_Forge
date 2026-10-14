@@ -29,8 +29,8 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import java.util.List;
 
@@ -229,7 +229,7 @@ public class EntitySkull extends Monster implements FlyingAnimal {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getEyeHeight(Pose pose) {
         return this.getDimensions(pose).height * 0.5F;
     }

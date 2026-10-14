@@ -26,8 +26,8 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import com.google.common.collect.Lists;
 
@@ -77,7 +77,7 @@ public class BlockLumabusVine extends BlockBaseNotFull implements DeferedSeedBlo
         return upState.getBlock() == this || upState.isFaceSturdy(world, pos, Direction.DOWN);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
@@ -112,7 +112,7 @@ public class BlockLumabusVine extends BlockBaseNotFull implements DeferedSeedBlo
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
         return new ItemStack(seed);
     }

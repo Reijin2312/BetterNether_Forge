@@ -40,8 +40,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * A gloomwisp: a thin stalk carrying a single elongated, faintly glowing head.
@@ -223,7 +221,6 @@ public class BlockGloomwispVine extends Block implements IRenderTypeable {
                 .setValue(OFFSET, !context.isSecondaryUseActive());
     }
 
-    @OnlyIn(Dist.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
@@ -438,7 +435,6 @@ public class BlockGloomwispVine extends Block implements IRenderTypeable {
      * and drift to the floor. Its provider also negates the y velocity it is given, hence the positive
      * value below for downward motion.
      */
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (state.getValue(SHAPE) != BlockProperties.TripleShape.TOP) return;

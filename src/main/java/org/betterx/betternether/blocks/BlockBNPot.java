@@ -21,13 +21,13 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public abstract class BlockBNPot extends BlockBaseNotFull {
     private static final VoxelShape SHAPE = box(3, 0, 3, 13, 8, 13);
 
     protected BlockBNPot(Block material) {
-        super(BlockBehaviour.Properties.copy(material).noOcclusion());
+        super(FabricBlockSettings.copy(material).noOcclusion());
     }
 
     public boolean useShapeForLightOcclusion(BlockState state) {

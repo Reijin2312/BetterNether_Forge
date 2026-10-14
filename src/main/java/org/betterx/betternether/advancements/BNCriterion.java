@@ -18,13 +18,8 @@ public class BNCriterion {
     public static PlayerTrigger.TriggerInstance BREW_BLUE_TRIGGER;
     public static PlayerTrigger.TriggerInstance USED_FORGE_ANY_TRIGGER;
 
-    private static boolean registered;
 
     public static void register() {
-        if (registered) {
-            return;
-        }
-        registered = true;
         BREW_BLUE = CriteriaTriggers.register(new PlayerTrigger(BetterNether.makeID("brew_blue")));
         USED_FORGE = CriteriaTriggers.register(new PlayerTrigger(BetterNether.makeID("used_forge")));
         DISTURBED_WISP = CriteriaTriggers.register(new PlayerTrigger(BetterNether.makeID("disturbed_wisp")));

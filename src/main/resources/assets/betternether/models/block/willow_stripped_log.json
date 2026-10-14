@@ -1,1 +1,12 @@
-﻿{"textures":{"end":"betternether:block/willow_stripped_log_top","side":"betternether:block/willow_stripped_log_side"},"parent":"minecraft:block/cube_column"}
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "betternether:block/willow_stripped_log_side",
+        "down": "betternether:block/willow_stripped_log_top",
+        "up": "betternether:block/willow_stripped_log_top",
+        "north": "betternether:block/willow_stripped_log_side",
+        "east": "betternether:block/willow_stripped_log_side",
+        "south": "betternether:block/willow_stripped_log_side",
+        "west": "betternether:block/willow_stripped_log_side"
+    }
+}
