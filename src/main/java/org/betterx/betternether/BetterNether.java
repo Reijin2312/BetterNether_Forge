@@ -82,7 +82,8 @@ public class BetterNether {
     }
 
     private void onCommonSetup(final FMLCommonSetupEvent event) {
-        onInitialize();
+        // common setup runs on parallel workers; BCLib, BetterNether and BetterEnd write the same registries here
+        event.enqueueWork(this::onInitialize);
     }
 
     private void ensureBlocksLoaded(RegisterEvent event) {
